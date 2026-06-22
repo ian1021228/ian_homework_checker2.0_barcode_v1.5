@@ -78,7 +78,7 @@
         <span class="font-bold tracking-wide flex items-center gap-1.5">
             <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-50 bg-indigo-500"></span>
             </span>
             已偵測到本地儲存檔，請恢復安全連線。
         </span>
@@ -262,7 +262,7 @@
         </div>
     </div>
 
-    <!-- 資料管理 Modal (移除雲端功能) -->
+    <!-- 資料管理 Modal -->
     <div id="data-management-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
         <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95 max-h-[90vh] overflow-y-auto border border-slate-100 custom-scrollbar">
            <h2 class="text-2xl font-extrabold mb-6 text-slate-900">資料管理</h2>
@@ -899,7 +899,6 @@
         
         const containerWidth = studentGrid.parentElement.clientWidth - 32; 
         
-        // 修正：完全移除不穩定的 availableHeight，純粹依照容器寬度推算最佳欄數與方格大小
         let bestCols = 1; let bestBoxSize = 0;
         
         for (let c = 1; c <= count; c++) {
@@ -907,7 +906,6 @@
             const sizeW = (containerWidth - (c - 1) * gap) / c; 
             const size = Math.min(sizeW, 160); // 限制單一方格最大為 160px
             
-            // 使用 >= 是關鍵，確保在空間充裕時，能盡可能塞入最多欄位並保持方格大小
             if (size >= bestBoxSize) { 
                 bestBoxSize = size; 
                 bestCols = c; 
@@ -921,7 +919,6 @@
         studentGrid.style.gap = `${gap}px`;
         studentGrid.style.gridTemplateColumns = `repeat(${bestCols}, 1fr)`;
         
-        // 取消寫死總寬度，讓 CSS Grid 自動適應，解決排版壓縮問題
         studentGrid.style.width = '100%'; 
         studentGrid.style.maxWidth = `${Math.floor(bestCols * bestBoxSize + (bestCols - 1) * gap)}px`;
 
@@ -1272,6 +1269,7 @@
             renderBarcodeInputs(newMax, currentClass); showToast("人數列表已更新，請記得點擊儲存！", "info");
         });
 
+        // 徹底修復：智慧連續條碼自動推算邏輯
         bindClick('auto-gen-barcodes-btn', () => {
             const inputs = document.querySelectorAll('.barcode-input');
             if (inputs.length < 3) {
@@ -1289,18 +1287,31 @@
 
             let prefixLen = 0;
             const minLen = Math.min(code1.length, code2.length, code3.length);
+            // 尋找最大共同前綴
             while(prefixLen < minLen && code1[prefixLen] === code2[prefixLen] && code1[prefixLen] === code3[prefixLen]) {
                 prefixLen++;
+            }
+
+            // 【關鍵修復】：如果找到的前綴「結尾是數字」，代表這個數字其實是被變動數字的補零（如 01, 02 共同前綴為 0），必須退回，確保抓取到完整的遞增數字區塊！
+            while(prefixLen > 0 && /\d/.test(code1[prefixLen - 1])) {
+                prefixLen--;
             }
             
             let suffixLen = 0;
             const minLenFromEnd = Math.min(code1.length - prefixLen, code2.length - prefixLen, code3.length - prefixLen);
+            // 尋找最大共同後綴
             while(suffixLen < minLenFromEnd && 
                   code1[code1.length - 1 - suffixLen] === code2[code2.length - 1 - suffixLen] && 
                   code1[code1.length - 1 - suffixLen] === code3[code3.length - 1 - suffixLen]) {
                 suffixLen++;
             }
+
+            // 同理：如果後綴的開頭是數字，也往回退縮
+            while(suffixLen > 0 && /\d/.test(code1[code1.length - suffixLen])) {
+                suffixLen--;
+            }
             
+            // 擷取出來的將會是「最完整」的變化數字區塊（如 "01", "02", "03"）
             const numStr1 = code1.substring(prefixLen, code1.length - suffixLen);
             const numStr2 = code2.substring(prefixLen, code2.length - suffixLen);
             const numStr3 = code3.substring(prefixLen, code3.length - suffixLen);
@@ -1335,6 +1346,8 @@
                 if (index < 3) return; 
                 const seat = parseInt(input.dataset.seat, 10);
                 const currentNum = n1 + (seat - 1) * diff1;
+                
+                // 動態保持位數位數，當 11 不足長度時不再錯誤補零成 011
                 let currentNumStr = Math.abs(currentNum).toString().padStart(padLen, '0');
                 if (currentNum < 0) currentNumStr = '-' + currentNumStr;
                 
@@ -1736,7 +1749,7 @@
         bindClick('resume-sync-btn', async () => {
             if (!fileHandle) return;
             try {
-                if ((await fileHandle.requestPermission({ mode: 'readwrite' })) === 'granted') { document.getElementById('sync-banner').classList.add('hidden'); document.body.classList.remove('has-banner'); await syncFromFileHandle(); reRenderCurrentPage(); showToast("硬碟檔案連線已重新恢復！", "success"); }
+                if ((await fileHandle.requestPermission({ mode: 'readwrite' })) === 'granted') { document.getElementById('sync-banner').classList.add('hidden'); document.body.classList.remove('has-banner'); await syncFromFileHandle(); reRenderCurrentPage(); showToast("硬ِل檔案連線已重新恢復！", "success"); }
             } catch(e) { console.error(e); }
         });
 
