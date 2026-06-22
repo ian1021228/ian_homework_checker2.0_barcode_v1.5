@@ -468,7 +468,7 @@
     <div id="toast-container" class="fixed bottom-6 right-6 flex flex-col gap-2 z-[110] pointer-events-none"></div>
 
     <footer class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-md border-t border-slate-200 text-slate-400 text-xs font-bold text-center py-2.5 z-20 select-none tracking-wide">
-        Created by Boai 602 王禹硯
+        Created by 王禹硯
     </footer>
 
 <script>
@@ -898,22 +898,32 @@
         const count = (hw.students || []).length; if (count === 0) return; 
         
         const containerWidth = studentGrid.parentElement.clientWidth - 32; 
-        const headerHeight = document.querySelector('#detail-page header').offsetHeight || 150;
-        const availableHeight = Math.max(window.innerHeight - headerHeight - 80, 200); 
         
+        // 修正：完全移除不穩定的 availableHeight，純粹依照容器寬度推算最佳欄數與方格大小
         let bestCols = 1; let bestBoxSize = 0;
+        
         for (let c = 1; c <= count; c++) {
-            const r = Math.ceil(count / c); const gap = window.innerWidth < 640 ? 10 : 14; 
-            const sizeW = (containerWidth - (c - 1) * gap) / c; const sizeH = (availableHeight - (r - 1) * gap) / r;
-            const size = Math.min(sizeW, sizeH, 160); 
-            if (size > bestBoxSize) { bestBoxSize = size; bestCols = c; }
+            const gap = window.innerWidth < 640 ? 10 : 14; 
+            const sizeW = (containerWidth - (c - 1) * gap) / c; 
+            const size = Math.min(sizeW, 160); // 限制單一方格最大為 160px
+            
+            // 使用 >= 是關鍵，確保在空間充裕時，能盡可能塞入最多欄位並保持方格大小
+            if (size >= bestBoxSize) { 
+                bestBoxSize = size; 
+                bestCols = c; 
+            }
         }
+        
         if (bestCols < 1) bestCols = 1;
         
         const gap = window.innerWidth < 640 ? 10 : 14;
-        studentGrid.className = `grid mx-auto`; studentGrid.style.gap = `${gap}px`;
+        studentGrid.className = `grid mx-auto`; 
+        studentGrid.style.gap = `${gap}px`;
         studentGrid.style.gridTemplateColumns = `repeat(${bestCols}, 1fr)`;
-        studentGrid.style.width = `${Math.floor(bestCols * bestBoxSize + (bestCols - 1) * gap)}px`; studentGrid.style.maxWidth = '100%';
+        
+        // 取消寫死總寬度，讓 CSS Grid 自動適應，解決排版壓縮問題
+        studentGrid.style.width = '100%'; 
+        studentGrid.style.maxWidth = `${Math.floor(bestCols * bestBoxSize + (bestCols - 1) * gap)}px`;
 
         const typeId = hw.typeId || 'default'; const typeConfig = getHomeworkType(typeId);
         const batchSelect = document.getElementById('batch-status-select');
