@@ -1212,6 +1212,7 @@
             const modal = document.getElementById('add-homework-modal');
             document.getElementById('homework-modal-title').textContent = '新增作業'; modal.querySelector('form').reset(); document.getElementById('edit-homework-id').value = '';
             document.getElementById('student-count-container').style.display = 'grid'; document.getElementById('homework-type-container').style.display = 'block'; document.getElementById('missing-seats-hint').style.display = 'block';
+            document.getElementById('student-count').required = true;
             updateTypeSelects(); 
             if (currentClassId) {
                 const currentClass = appData.classes.find(c => c.id === currentClassId);
@@ -1641,7 +1642,9 @@
             if (editBtn) {
                 e.stopPropagation(); const homeworkId = editBtn.dataset.id; const hw = appData.homeworks.find(h => h.id === homeworkId);
                 const modal = document.getElementById('add-homework-modal'); document.getElementById('homework-modal-title').textContent = '更改作業名稱'; modal.querySelector('form').reset();
-                document.getElementById('homework-name').value = hw ? hw.name : ''; document.getElementById('edit-homework-id').value = homeworkId; document.getElementById('student-count-container').style.display = 'none'; document.getElementById('homework-type-container').style.display = 'none'; document.getElementById('missing-seats-hint').style.display = 'none'; openModal(modal); return;
+                document.getElementById('homework-name').value = hw ? hw.name : ''; document.getElementById('edit-homework-id').value = homeworkId; document.getElementById('student-count-container').style.display = 'none'; document.getElementById('homework-type-container').style.display = 'none'; document.getElementById('missing-seats-hint').style.display = 'none'; 
+                document.getElementById('student-count').required = false;
+                openModal(modal); return;
             }
             const hwItem = e.target.closest('[data-id]');
             if (hwItem) { document.getElementById('detail-page').dataset.from = 'main-page'; showDetailPage(hwItem.dataset.id); }
@@ -1698,7 +1701,9 @@
             if (toHwBtn) {
                 const index = parseInt(toHwBtn.dataset.index), modal = document.getElementById('add-homework-modal');
                 document.getElementById('homework-modal-title').textContent = '新增聯絡簿作業'; modal.querySelector('form').reset(); document.getElementById('homework-name').value = currentClass.contactBook[dateString][index]; document.getElementById('edit-homework-id').value = '';
-                document.getElementById('student-count-container').style.display = 'grid'; document.getElementById('homework-type-container').style.display = 'block'; document.getElementById('missing-seats-hint').style.display = 'block'; updateTypeSelects(); 
+                document.getElementById('student-count-container').style.display = 'grid'; document.getElementById('homework-type-container').style.display = 'block'; document.getElementById('missing-seats-hint').style.display = 'block'; 
+                document.getElementById('student-count').required = true;
+                updateTypeSelects(); 
                 if (currentClass && currentClass.lastMaxSeat) { document.getElementById('student-count').value = currentClass.lastMaxSeat; document.getElementById('homework-missing-seats').value = currentClass.lastMissingSeats || ''; } 
                 else { const classHws = appData.homeworks.filter(h => h.classId === currentClassId); if(classHws.length > 0) { let maxSeat = 0; (classHws[classHws.length-1].students || []).forEach(s => maxSeat = Math.max(maxSeat, s.seat)); document.getElementById('student-count').value = maxSeat || 30; } else document.getElementById('student-count').value = 30; }
                 openModal(modal);
