@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>作業點收系統 (條碼與雲端升級版)</title>
+    <title>作業點收系統 (條碼與本地升級版)</title>
     
     <link rel="manifest" href="/ian_homework_checker_2.0_app/manifest.json">
     <meta name="theme-color" content="#4f46e5">
@@ -93,7 +93,7 @@
                      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">作業列表</h1>
                      <select id="class-selector" class="rounded-xl border-slate-200/80 shadow-sm shadow-slate-100/50 focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 bg-white font-extrabold text-indigo-600 cursor-pointer transition-all"></select>
                 </div>
-                <!-- 修改區塊：按鈕保持在同一行，不換行，允許水平滑動 -->
+                <!-- 按鈕保持在同一行，不換行，允許水平滑動 -->
                 <div class="flex gap-2.5 justify-start lg:justify-end w-full lg:w-auto overflow-x-auto hide-scroll flex-nowrap items-center pb-2">
                      <button id="install-pwa-btn" class="hidden bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-pink-500/10 hover:shadow-pink-500/20 transition-all transform hover:-translate-y-0.5 whitespace-nowrap shrink-0">⬇️ 安裝 App</button>
                      
@@ -130,7 +130,6 @@
 
     <!-- 作業詳細座號頁 -->
     <div id="detail-page" class="hidden container mx-auto max-w-7xl p-5 sm:p-8 lg:p-10 page-section h-screen flex flex-col">
-        <!-- 詳細頁面內容保持不變 -->
         <header class="mb-6 flex-shrink-0">
             <button id="back-to-main-btn" class="text-slate-400 hover:text-indigo-600 font-bold mb-4 block cursor-pointer transition-colors flex items-center gap-1 text-sm tracking-wide">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> 返回作業列表
@@ -177,10 +176,8 @@
         </div>
     </div>
 
-    <!-- 其他頁面省略內容保持不變，直接加入資料管理 Modal 的修改 -->
     <!-- 學生詳情統計頁 -->
     <div id="student-details-page" class="hidden container mx-auto max-w-7xl p-5 sm:p-8 lg:p-10 page-section">
-        <!-- 內容保持原樣 -->
         <header class="mb-8 flex flex-col gap-4">
             <div>
                  <button id="back-from-student-details-btn" class="text-slate-400 hover:text-indigo-600 font-bold mb-3 cursor-pointer flex items-center gap-1 text-sm tracking-wide">
@@ -232,7 +229,6 @@
                     <h1 id="contact-book-title" class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">聯絡簿</h1>
                     <p id="contact-book-date" class="text-slate-400 mt-1 font-bold text-sm tracking-wide"></p>
                 </div>
-                <!-- 調整不換行 -->
                 <div class="flex gap-2.5 justify-start lg:justify-end w-full lg:w-auto overflow-x-auto hide-scroll flex-nowrap items-center pb-2">
                     <div class="flex bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden shrink-0">
                         <button id="font-decrease-btn" class="px-3.5 py-2 text-slate-500 hover:bg-slate-50 border-r border-slate-200 font-bold transition-colors">A-</button>
@@ -253,7 +249,6 @@
             </div>
         </header>
         
-        <!-- 黑板內容 -->
         <div class="bg-[#d2b48c] p-4 sm:p-6 rounded-3xl shadow-2xl border-4 border-[#a0522d]/80" style="background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');">
             <div class="bg-[#2c3e50] rounded-2xl p-6 sm:p-8 flex flex-col relative overflow-hidden" style="min-height: 60vh; border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 0 45px rgba(0,0,0,0.6), inset 0 2px 10px rgba(255,255,255,0.08);">
                 <div class="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-black/35 pointer-events-none mix-blend-overlay z-10"></div>
@@ -267,56 +262,12 @@
         </div>
     </div>
 
-    <!-- 資料管理 Modal (更新雲端容量顯示) -->
+    <!-- 資料管理 Modal (移除雲端功能) -->
     <div id="data-management-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
         <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95 max-h-[90vh] overflow-y-auto border border-slate-100 custom-scrollbar">
            <h2 class="text-2xl font-extrabold mb-6 text-slate-900">資料管理</h2>
            
            <div class="space-y-5">
-               
-               <!-- ☁️ 雲端同步區塊 -->
-               <div class="p-5 border border-sky-100 rounded-2xl bg-sky-50/50 shadow-sm relative overflow-hidden flex flex-col">
-                   <div class="absolute top-0 right-0 p-3 opacity-10"><svg class="w-16 h-16 text-sky-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"></path></svg></div>
-                   <h3 class="font-bold text-sky-900 mb-2 flex items-center gap-1.5 relative z-10">☁️ Firebase 雲端備份</h3>
-                   <div id="cloud-sync-status" class="text-sm text-sky-700 mb-4 font-bold leading-relaxed relative z-10">
-                       狀態：未登入，點擊下方按鈕登入以啟用雲端同步。
-                   </div>
-                   <button id="google-login-btn" class="w-full bg-white text-slate-700 border border-slate-300 font-bold py-2.5 px-4 rounded-xl hover:bg-slate-50 shadow-sm mb-2 transition-colors flex items-center justify-center gap-2 relative z-10">
-                       使用 Google 帳號登入
-                   </button>
-                   <div id="cloud-actions" class="hidden flex flex-col gap-2 relative z-10">
-                       <button id="cloud-load-btn" class="w-full bg-sky-600 text-white font-bold py-2.5 px-4 rounded-xl hover:bg-sky-700 shadow-sm transition-colors">從雲端下載並覆蓋本地</button>
-                       <button id="google-logout-btn" class="w-full bg-white text-rose-500 border border-rose-200 font-bold py-2 px-4 rounded-xl hover:bg-rose-50 transition-colors text-xs">登出帳號</button>
-                   </div>
-                   
-                   <!-- 新增：雲端空間使用量視覺化 -->
-                   <div id="cloud-storage-container" class="mt-4 bg-white/60 rounded-xl p-4 border border-sky-100 relative z-10 hidden w-full">
-                       <div class="flex justify-between items-end mb-2">
-                           <span class="text-xs font-bold text-sky-900 tracking-wide">雲端空間分析</span>
-                           <span class="text-[10px] font-bold text-sky-700"><span id="storage-used">0</span> / 1024 KB (單檔上限)</span>
-                       </div>
-                       <!-- 進度條 -->
-                       <div class="h-3.5 w-full bg-slate-200 rounded-full overflow-hidden flex shadow-inner">
-                           <div id="bar-hw" class="h-full bg-indigo-500 transition-all duration-700 ease-out" style="width: 0%"></div>
-                           <div id="bar-cb" class="h-full bg-amber-400 transition-all duration-700 ease-out" style="width: 0%"></div>
-                           <div id="bar-ot" class="h-full bg-slate-500 transition-all duration-700 ease-out" style="width: 0%"></div>
-                       </div>
-                       <!-- 圖例 -->
-                       <div class="flex gap-4 mt-3 text-[10px] font-bold justify-center flex-wrap">
-                           <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-sm"></span>作業 <span id="text-hw" class="text-slate-500">0KB</span></div>
-                           <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm"></span>聯絡簿 <span id="text-cb" class="text-slate-500">0KB</span></div>
-                           <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-500 shadow-sm"></span>其他 <span id="text-ot" class="text-slate-500">0KB</span></div>
-                       </div>
-                       
-                       <!-- 報錯訊息區域 -->
-                       <div id="cloud-error-msg" class="hidden mt-3 p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-600 text-[11px] font-bold text-center flex items-center justify-center gap-1">
-                           <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                           無法連接雲端資料庫，請檢查連線或金鑰設定。
-                       </div>
-                   </div>
-               </div>
-
-               <!-- 其餘區塊保持原本設計... -->
                <div class="p-5 border border-indigo-100 rounded-2xl bg-indigo-50/50 shadow-sm">
                    <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-1.5">💾 本地硬碟自動儲存</h3>
                    <div id="current-file-status" class="text-sm text-indigo-700 mb-4 font-bold leading-relaxed">
@@ -347,7 +298,6 @@
                    <input type="file" id="import-file-input" accept=".json" class="hidden">
                    <button id="trigger-import-btn" class="w-full bg-white text-rose-600 border border-rose-200 font-bold py-2.5 px-4 rounded-xl hover:bg-rose-50 shadow-sm transition-colors">選擇檔案並覆蓋還原</button>
                    
-                   <!-- 隱藏但保留邏輯使用的 checkboxes -->
                    <div class="hidden">
                        <input type="checkbox" id="export-hw-chk" checked>
                        <input type="checkbox" id="export-types-chk" checked>
@@ -362,14 +312,132 @@
        </div>
     </div>
 
-    <!-- 條碼設定 Modal、新增作業、管理班級、確認視窗等保持隱藏架構 -->
-    <div id="barcodes-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0"><div class="modal-content bg-white rounded-2xl p-8 w-full max-w-md"></div></div>
-    <div id="add-homework-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0"><div class="modal-content bg-white rounded-2xl p-8 w-full max-w-md"></div></div>
-    <div id="manage-classes-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0"><div class="modal-content bg-white rounded-2xl p-8 w-full max-w-md"></div></div>
-    <div id="date-picker-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden z-50 opacity-0"><div id="date-picker-content" class="bg-white rounded-3xl p-6 w-full max-w-sm"></div></div>
-    <div id="all-done-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0"><div class="modal-content bg-white rounded-2xl p-8 w-full max-w-lg"></div></div>
-    <div id="overall-all-done-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0"><div class="modal-content bg-white rounded-2xl p-8 w-full max-w-lg"></div></div>
+    <!-- 條碼設定 Modal、新增作業、管理班級、確認視窗 -->
+    <div id="barcodes-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95 max-h-[90vh] overflow-y-auto border border-slate-100 custom-scrollbar">
+            <h2 class="text-2xl font-extrabold mb-2 text-slate-900">學生條碼設定</h2>
+            <p class="text-xs text-slate-400 mb-4 font-medium">設定後可於點收頁面利用條碼槍快速登記。</p>
+            
+            <div class="flex items-center gap-2 mb-4 bg-amber-50/50 p-3 rounded-xl border border-amber-100/60 shadow-sm relative overflow-hidden">
+                <div class="absolute -right-2 -top-2 opacity-20 text-5xl">⚡</div>
+                <div class="flex-grow relative z-10">
+                    <h3 class="text-sm font-bold text-amber-900">智慧連續條碼設定</h3>
+                    <p class="text-[11px] text-amber-700 leading-tight mt-0.5">請在下方欄位手動輸入 1號 到 3號 的條碼，系統將自動推算全班規律。</p>
+                </div>
+                <button id="auto-gen-barcodes-btn" class="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-2.5 rounded-lg hover:from-amber-500 hover:to-orange-600 transition-colors shadow-sm whitespace-nowrap relative z-10">自動推算</button>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4 bg-indigo-50/50 p-3 rounded-xl border border-indigo-100/60 shadow-sm">
+                <label for="barcode-max-seat" class="text-sm font-bold text-indigo-900 whitespace-nowrap">班級人數：</label>
+                <input type="number" id="barcode-max-seat" min="1" max="100" class="block w-20 rounded-lg border-slate-200 bg-white p-2 text-sm font-bold shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-center" value="30">
+                <button id="update-barcode-seats-btn" class="bg-indigo-600 text-white text-xs font-bold px-3 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap ml-auto">套用人數</button>
+            </div>
+
+            <div id="barcode-inputs-container" class="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar"></div>
+
+            <div class="flex justify-end space-x-3 pt-5 mt-5 border-t border-slate-100">
+                <button type="button" class="cancel-btn bg-slate-100 text-slate-600 font-bold py-2.5 px-5 rounded-xl hover:bg-slate-200 transition-colors">取消</button>
+                <button id="save-barcodes-btn" class="bg-indigo-600 text-white font-bold py-2.5 px-6 rounded-xl shadow-md hover:bg-indigo-700 transition-colors tracking-wide">儲存條碼配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增作業 Modal -->
+    <div id="add-homework-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95 border border-slate-100">
+            <h2 id="homework-modal-title" class="text-2xl font-extrabold mb-6 text-slate-900">新增作業</h2>
+            <form id="add-homework-form" class="space-y-5">
+                <input type="hidden" id="edit-homework-id">
+                <div>
+                    <label for="homework-name" class="block text-sm font-bold text-slate-700 mb-1.5">作業名稱</label>
+                    <input type="text" id="homework-name" class="block w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white shadow-sm p-3 text-base font-bold transition-colors" required placeholder="例如：數學習作 P10">
+                </div>
+                <div id="homework-type-container">
+                    <label for="homework-type-select" class="block text-sm font-bold text-slate-700 mb-1.5">作業種類</label>
+                    <select id="homework-type-select" class="block w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white shadow-sm p-3 text-base font-bold transition-colors cursor-pointer"></select>
+                </div>
+                <div id="student-count-container" class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="student-count" class="block text-sm font-bold text-slate-700 mb-1.5">最後座號</label>
+                        <input type="number" id="student-count" min="1" max="100" class="block w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white shadow-sm p-3 text-base font-bold transition-colors" required placeholder="例如：30">
+                    </div>
+                    <div>
+                        <label for="homework-missing-seats" class="block text-sm font-bold text-slate-700 mb-1.5">班級缺號 (選填)</label>
+                        <input type="text" id="homework-missing-seats" class="block w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white shadow-sm p-3 text-base font-bold transition-colors" placeholder="例如: 15,16,20-25">
+                    </div>
+                </div>
+                <p id="missing-seats-hint" class="text-xs text-slate-400 mt-1 leading-relaxed font-medium">※ 支援逗號隔開 (例: 1,3) 或連字號設定範圍 (例: 20-25)。</p>
+
+                <div class="flex justify-end space-x-3 pt-5 mt-2 border-t border-slate-100">
+                    <button type="button" class="cancel-btn bg-slate-100 text-slate-600 font-bold py-2.5 px-5 rounded-xl hover:bg-slate-200 transition-colors">取消</button>
+                    <button type="submit" class="bg-indigo-600 text-white font-bold py-2.5 px-6 rounded-xl shadow-md hover:bg-indigo-700 transition-colors">儲存作業</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
+    <!-- 管理班級 Modal -->
+    <div id="manage-classes-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
+         <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform scale-95 border border-slate-100">
+            <h2 class="text-2xl font-extrabold mb-6 text-slate-900">管理班級</h2>
+            <form id="add-class-form" class="flex gap-2 mb-6">
+                 <input type="text" id="class-name" class="flex-grow block w-full rounded-xl border-slate-200 bg-slate-50 focus:bg-white shadow-sm p-3 text-base font-medium transition-colors" required placeholder="例如：六年二班">
+                 <button type="submit" class="bg-slate-800 text-white font-bold py-3 px-5 rounded-xl shadow-md hover:bg-slate-900 transition-colors whitespace-nowrap">新增班級</button>
+            </form>
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 font-black">現有班級清單</h3>
+            <div id="class-list" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar"></div>
+            <div class="flex justify-end pt-5 mt-5 border-t border-slate-100">
+                <button type="button" class="cancel-btn bg-slate-100 text-slate-600 font-bold py-2.5 px-6 rounded-xl hover:bg-slate-200 transition-colors">關閉</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 月曆日期選擇 Modal -->
+    <div id="date-picker-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden z-50 opacity-0">
+        <div id="date-picker-content" class="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm transform scale-95">
+            <div class="flex items-center justify-between mb-5">
+                <button id="prev-month-btn" class="p-2 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h3 id="current-month-year" class="text-lg font-bold text-slate-800"></h3>
+                <button id="next-month-btn" class="p-2 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-400 mb-3">
+                <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+            </div>
+            <div id="calendar-grid" class="grid grid-cols-7 gap-1 sm:gap-2"></div>
+            <div class="flex justify-end mt-6 pt-4 border-t border-slate-100">
+                <button id="close-date-picker-btn" class="bg-slate-100 text-slate-600 font-bold py-2.5 px-6 rounded-xl hover:bg-slate-200 transition-colors">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 已完成名單 Modal -->
+    <div id="all-done-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg transform scale-95 border border-slate-100">
+            <h2 class="text-2xl font-extrabold mb-6 text-slate-900">完成 / 已繳交學生名單</h2>
+            <div id="all-done-list" class="grid grid-cols-4 sm:grid-cols-6 gap-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar"></div>
+            <div class="flex justify-end pt-6 mt-4 border-t border-slate-100">
+                <button type="button" class="cancel-btn bg-slate-100 text-slate-600 font-bold py-2.5 px-6 rounded-xl hover:bg-slate-200 transition-colors">關閉</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 全勤名單 Modal -->
+    <div id="overall-all-done-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-50 opacity-0">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg transform scale-95 border border-slate-100">
+            <h2 class="text-2xl font-extrabold mb-2 text-slate-900">🏆 全勤榮譽名單</h2>
+            <p class="text-sm text-slate-500 mb-6">此處列出在當前班級的所有作業中，狀態皆為「已完成/已繳交」的學生。</p>
+            <div id="overall-all-done-list" class="grid grid-cols-4 sm:grid-cols-6 gap-3 max-h-96 overflow-y-auto pr-1 custom-scrollbar"></div>
+            <div class="flex justify-end pt-6 mt-4 border-t border-slate-100">
+                <button type="button" class="cancel-btn bg-slate-100 text-slate-600 font-bold py-2.5 px-6 rounded-xl hover:bg-slate-200 transition-colors">關閉</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 確認視窗 Modal -->
     <div id="confirm-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4 hidden confirm-modal z-[60] opacity-0">
         <div class="confirm-modal-content bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm transform scale-95 border border-slate-100">
             <h2 id="confirm-title" class="text-xl font-extrabold mb-3 text-slate-900">確定要執行嗎？</h2>
@@ -384,47 +452,27 @@
     <!-- 歡迎視窗 -->
     <div id="welcome-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden modal z-[100] opacity-0">
         <div class="modal-content bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg">
+            <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 mx-auto sm:mx-0">
+                <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            </div>
             <h2 class="text-3xl font-black mb-3">歡迎使用 🎉</h2>
-            <p class="text-slate-500 mb-8 font-medium">支援綁定硬碟與 Google 雲端備份！建議建立專屬的 <span class="text-rose-500 font-bold">.json</span> 檔案保存資料。</p>
+            <p class="text-slate-500 mb-8 font-medium">支援綁定硬碟實體檔案備份！建議您建立一個專屬的 <span class="text-rose-500 font-bold">.json</span> 檔案來保存資料，系統會自動讀取與覆蓋更新。</p>
             <div class="flex flex-col sm:flex-row justify-end gap-3">
-                <button id="welcome-skip-btn" class="bg-slate-100 py-3 px-6 rounded-xl font-bold">先存在瀏覽器就好</button>
-                <button id="welcome-link-btn" class="bg-indigo-600 text-white py-3 px-6 rounded-xl font-bold shadow-lg">建立或綁定本地檔案</button>
+                <button id="welcome-skip-btn" class="bg-slate-100 py-3 px-6 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">先存在瀏覽器就好</button>
+                <button id="welcome-link-btn" class="bg-indigo-600 text-white py-3 px-6 rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition-all">建立或綁定本地檔案</button>
             </div>
         </div>
     </div>
 
+    <!-- 頂級 Toast 氣泡提示容器 -->
     <div id="toast-container" class="fixed bottom-6 right-6 flex flex-col gap-2 z-[110] pointer-events-none"></div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <footer class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-md border-t border-slate-200 text-slate-400 text-xs font-bold text-center py-2.5 z-20 select-none tracking-wide">
+        Created by Boai 602 王禹硯
+    </footer>
 
-    let fbApp, fbAuth, fbDb;
-    let currentUser = null;
-    const globalAppId = typeof __app_id !== 'undefined' ? __app_id : 'homework-checker-pro';
-
-    try {
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDuBAZ5hEcrhpYt-XjhiXfi-wuow0Cq83A",
-            authDomain: "cheker-barcode.firebaseapp.com",
-            projectId: "cheker-barcode"
-        };
-        if (firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("請在此填入")) {
-            fbApp = initializeApp(firebaseConfig);
-            fbAuth = getAuth(fbApp);
-            fbDb = getFirestore(fbApp);
-            
-            onAuthStateChanged(fbAuth, (user) => {
-                currentUser = user;
-                updateDataManagementUI();
-            });
-        }
-    } catch(err) {
-        console.warn("Firebase 初始化失敗:", err);
-    }
-
-    // --- Toast 提示功能 ---
+<script>
+    // --- 擬真 Toast 提示功能 ---
     window.showToast = function(message, type = 'success') {
         const container = document.getElementById('toast-container');
         if (!container) return;
@@ -434,179 +482,1276 @@
             type === 'error' ? 'bg-rose-50 text-rose-800 border-rose-100' :
             'bg-slate-900 text-white border-slate-800'
         }`;
-        toast.innerHTML = `<span>${message}</span>`;
+        
+        let icon = '';
+        if (type === 'success') {
+            icon = '<svg class="w-4.5 h-4.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>';
+        } else if (type === 'error') {
+            icon = '<svg class="w-4.5 h-4.5 text-rose-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>';
+        } else {
+            icon = '<svg class="w-4.5 h-4.5 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>';
+        }
+
+        toast.innerHTML = `${icon}<span>${message}</span>`;
         container.appendChild(toast);
+        
         setTimeout(() => toast.classList.remove('translate-y-4', 'opacity-0'), 10);
-        setTimeout(() => { toast.classList.add('translate-y-4', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3200);
+        setTimeout(() => {
+            toast.classList.add('translate-y-4', 'opacity-0');
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
     }
 
-    // --- 資料變數 ---
+    // --- 擬真 Alert 視窗功能 ---
+    window.showAlertModal = function(title, message) {
+        document.getElementById('confirm-title').textContent = title;
+        document.getElementById('confirm-message').textContent = message;
+        
+        const confirmOk = document.getElementById('confirm-ok');
+        const confirmCancel = document.getElementById('confirm-cancel');
+        
+        confirmCancel.classList.add('hidden'); // 隱藏取消按鈕，僅保留確認
+        openModal(document.getElementById('confirm-modal'));
+        
+        const okHandler = () => {
+            closeModal(document.getElementById('confirm-modal'));
+            cleanup();
+        };
+        const cleanup = () => {
+            confirmOk.removeEventListener('click', okHandler);
+            confirmCancel.classList.remove('hidden'); // 安全還原取消按鈕
+        };
+        confirmOk.addEventListener('click', okHandler);
+    }
+
+    // --- 預設常數與資料結構 ---
     const DEFAULT_TYPES = [
-        { id: 'default', name: '一般作業', statuses: [{key:'not-submitted',text:'未繳交',color:'bg-slate-200',textColor:'text-slate-500',isCompleted:false}, {key:'completed',text:'已完成',color:'bg-emerald-500',textColor:'text-white',isCompleted:true}] }
+        {
+            id: 'default',
+            name: '一般作業',
+            statuses: [
+                { key: 'not-submitted', text: '未繳交', color: 'bg-slate-200', textColor: 'text-slate-500', isCompleted: false },
+                { key: 'submitted', text: '已繳交', color: 'bg-blue-500', textColor: 'text-white', isCompleted: true },
+                { key: 'needs-correction', text: '待訂正', color: 'bg-amber-400', textColor: 'text-amber-950', isCompleted: false },
+                { key: 'completed', text: '已完成', color: 'bg-emerald-500', textColor: 'text-white', isCompleted: true }
+            ]
+        },
+        {
+            id: 'reading',
+            name: '閱讀作業',
+            statuses: [
+                { key: 'unread', text: '未閱讀', color: 'bg-slate-200', textColor: 'text-slate-500', isCompleted: false },
+                { key: 'read', text: '已閱讀', color: 'bg-emerald-500', textColor: 'text-white', isCompleted: true }
+            ]
+        }
     ];
+
+    const STATUS_COLORS = [
+        { class: 'bg-slate-200', textClass: 'text-slate-500', name: '灰' },
+        { class: 'bg-blue-500', textClass: 'text-white', name: '藍' },
+        { class: 'bg-emerald-500', textClass: 'text-white', name: '綠' },
+        { class: 'bg-amber-400', textClass: 'text-amber-950', name: '黃' },
+        { class: 'bg-rose-500', textClass: 'text-white', name: '紅' },
+        { class: 'bg-purple-500', textClass: 'text-white', name: '紫' }
+    ];
+
     let appData = { classes: [], homeworks: [], homeworkTypes: JSON.parse(JSON.stringify(DEFAULT_TYPES)) };
     let currentClassId = localStorage.getItem('currentClassId') || null;
+    let currentHomeworkId = null;
+    let selectedDate = new Date();
+    let calendarDate = new Date();
+    
+    // 黑板樣式參數
+    let blackboardFontSize = parseFloat(localStorage.getItem('hw_pref_fontSize')) || 1.25;
+    let blackboardLineHeight = parseFloat(localStorage.getItem('hw_pref_lineHeight')) || 1.75;
+    
+    let currentPage = 'main-page';
+    let scrollPositions = {};
+    let isSaving = false;
+    let saveTimeout = null;
     let fileHandle = null;
 
-    // --- 空間計算模組 ---
-    function getObjectSizeKB(obj) {
-        try {
-            return new Blob([JSON.stringify(obj)]).size / 1024;
-        } catch(e) { return 0; }
+    window.addEventListener('beforeunload', (e) => {
+        if (isSaving) { e.preventDefault(); e.returnValue = '資料同步中，此時關閉可能導致硬碟檔案損毀！'; }
+    });
+    
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'homeworkAppData' && e.newValue) {
+            try {
+                const newData = JSON.parse(e.newValue);
+                if (newData && newData.classes) { appData = newData; fixDates(appData); reRenderCurrentPage(); }
+            } catch(err) {}
+        }
+    });
+
+    document.addEventListener('visibilitychange', async () => {
+        if (document.visibilityState === 'visible' && fileHandle && !isSaving) {
+            try { if ((await fileHandle.queryPermission({ mode: 'read' })) === 'granted') await syncFromFileHandleSilently(); } catch (e) {}
+        }
+    });
+
+    function reRenderCurrentPage() {
+        if (currentPage === 'main-page') { renderClassSelector(); renderHomeworkList(); renderClassList(); } 
+        else if (currentPage === 'detail-page') {
+            if (currentHomeworkId && appData.homeworks.find(h => h.id === currentHomeworkId)) renderStudentGrid(currentHomeworkId);
+            else showMainPage();
+        } 
+        else if (currentPage === 'student-details-page') renderStudentDetailsPage();
+        else if (currentPage === 'contact-book-page') renderContactBookItems();
+        else if (currentPage === 'homework-types-page') renderHomeworkTypesPage();
+        updateDataManagementUI();
     }
 
-    function updateCloudStorageUI() {
-        const container = document.getElementById('cloud-storage-container');
-        const errorMsg = document.getElementById('cloud-error-msg');
-        
-        if (!currentUser) {
-            if(container) container.classList.add('hidden');
-            return;
-        }
-        if(container) container.classList.remove('hidden');
-
-        // 偵測 Firebase 連線狀態
-        if (!fbDb) {
-            if(errorMsg) errorMsg.classList.remove('hidden');
-            // 將條歸零
-            document.getElementById('bar-hw').style.width = '0%';
-            document.getElementById('bar-cb').style.width = '0%';
-            document.getElementById('bar-ot').style.width = '0%';
-            return;
-        } else {
-            if(errorMsg) errorMsg.classList.add('hidden');
-        }
-
-        // 拆解計算空間
-        const cbData = appData.classes.map(c => c.contactBook || {});
-        const cbKb = getObjectSizeKB(cbData);
-        
-        const classesWithoutCb = appData.classes.map(({contactBook, ...rest}) => rest);
-        const hwKb = getObjectSizeKB(appData.homeworks) + getObjectSizeKB(classesWithoutCb);
-        
-        const otKb = getObjectSizeKB(appData.homeworkTypes);
-
-        const totalKb = hwKb + cbKb + otKb;
-        const maxKb = 1024; // Firebase 單一 Document 容量極限為 1 MiB (1024 KB)
-
-        const hwPct = Math.min((hwKb / maxKb) * 100, 100);
-        const cbPct = Math.min((cbKb / maxKb) * 100, 100);
-        const otPct = Math.min((otKb / maxKb) * 100, 100);
-
-        document.getElementById('storage-used').textContent = totalKb.toFixed(1);
-        
-        // 渲染條碼寬度
-        document.getElementById('bar-hw').style.width = `${hwPct}%`;
-        document.getElementById('bar-cb').style.width = `${cbPct}%`;
-        document.getElementById('bar-ot').style.width = `${otPct}%`;
-
-        document.getElementById('text-hw').textContent = `${hwKb.toFixed(1)}KB`;
-        document.getElementById('text-cb').textContent = `${cbKb.toFixed(1)}KB`;
-        document.getElementById('text-ot').textContent = `${otKb.toFixed(1)}KB`;
+    function getDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open('HomeworkAppLocalDB', 1);
+            request.onupgradeneeded = (e) => e.target.result.createObjectStore('settings');
+            request.onsuccess = (e) => resolve(e.target.result);
+            request.onerror = (e) => reject(e.target.error);
+        });
     }
 
-    // --- Firebase 雲端同步更新 (加入報錯) ---
-    async function syncDataToCloud() {
-        if (!currentUser) return;
-        if (!fbDb) {
-            document.getElementById('cloud-error-msg')?.classList.remove('hidden');
-            return;
+    async function saveFileHandle(handle) {
+        const db = await getDB();
+        return new Promise((resolve) => {
+            const tx = db.transaction('settings', 'readwrite');
+            tx.objectStore('settings').put(handle, 'fileHandle');
+            tx.oncomplete = () => resolve();
+        });
+    }
+
+    async function getFileHandle() {
+        const db = await getDB();
+        return new Promise((resolve) => {
+            const tx = db.transaction('settings', 'readonly');
+            const req = tx.objectStore('settings').get('fileHandle');
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => resolve(null);
+        });
+    }
+
+    async function clearFileHandle() {
+        const db = await getDB();
+        return new Promise((resolve) => {
+            const tx = db.transaction('settings', 'readwrite');
+            tx.objectStore('settings').delete('fileHandle');
+            tx.oncomplete = () => resolve();
+        });
+    }
+
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+    function fixDates(dataObj) {
+        if(dataObj && dataObj.homeworks) {
+            dataObj.homeworks.forEach(h => { if (h && h.createdAt && typeof h.createdAt === 'string') h.createdAt = new Date(h.createdAt); });
         }
-        try {
-            const docRef = doc(fbDb, 'artifacts', globalAppId, 'users', currentUser.uid, 'appData', 'mainDoc');
-            await setDoc(docRef, { data: JSON.stringify(appData), updatedAt: new Date().toISOString() });
-            document.getElementById('cloud-error-msg')?.classList.add('hidden');
-            updateCloudStorageUI(); // 同步成功後更新 UI
-        } catch (error) {
-            console.error("Cloud sync error:", error);
-            document.getElementById('cloud-error-msg')?.classList.remove('hidden');
-            showToast("雲端同步失敗，請確認網路連線。", "error");
+        if (dataObj && dataObj.homeworkTypes) {
+            dataObj.homeworkTypes.forEach(t => {
+                (t.statuses || []).forEach(s => {
+                    if (s.color === 'bg-red-500') { s.color = 'bg-rose-500'; s.textColor = 'text-white'; }
+                    else if (s.color === 'bg-yellow-500') { s.color = 'bg-amber-400'; s.textColor = 'text-amber-950'; }
+                    else if (s.color === 'bg-green-500') { s.color = 'bg-emerald-500'; s.textColor = 'text-white'; }
+                    else if (s.color === 'bg-gray-300') { s.color = 'bg-slate-200'; s.textColor = 'text-slate-500'; }
+                });
+            });
         }
     }
 
-    async function loadDataFromCloud(silent = false) {
-        if (!currentUser) return;
-        if (!fbDb) {
-            showToast("無法連接至資料庫，請稍後再試。", "error");
-            return;
-        }
+    function runAutoBackup() {
+        const today = formatDate(new Date(), 'YYYY-MM-DD');
+        const backupKey = `hw_backup_${today}`;
+        localStorage.setItem(backupKey, JSON.stringify(appData));
+        const keys = Object.keys(localStorage).filter(k => k.startsWith('hw_backup_')).sort();
+        if (keys.length > 3) keys.slice(0, keys.length - 3).forEach(k => localStorage.removeItem(k));
+    }
+
+    function saveData() {
+        isSaving = true;
+        return new Promise((resolve) => {
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(async () => {
+                try {
+                    localStorage.setItem('homeworkAppData', JSON.stringify(appData));
+                    runAutoBackup();
+                    if (fileHandle && (await fileHandle.queryPermission({ mode: 'readwrite' })) === 'granted') {
+                        const writable = await fileHandle.createWritable();
+                        await writable.write(JSON.stringify(appData));
+                        await writable.close();
+                    }
+                } catch (error) { console.error(error); } 
+                finally { isSaving = false; resolve(); }
+            }, 300);
+        });
+    }
+
+    async function syncFromFileHandle() {
+        if (!fileHandle) return false;
         try {
-            const docRef = doc(fbDb, 'artifacts', globalAppId, 'users', currentUser.uid, 'appData', 'mainDoc');
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists() && docSnap.data().data) {
-                const cloudData = JSON.parse(docSnap.data().data);
-                appData = cloudData; 
-                localStorage.setItem('homeworkAppData', JSON.stringify(appData));
-                showToast('已成功從雲端載入資料！', 'success');
-                setTimeout(() => window.location.reload(), 500);
-            } else if (!silent) {
-                showToast('雲端尚未有備份資料。', 'info');
+            const file = await fileHandle.getFile(); const text = await file.text();
+            if (text) {
+                appData = JSON.parse(text); fixDates(appData);
+                localStorage.setItem('homeworkAppData', JSON.stringify(appData)); runAutoBackup(); return true;
             }
-        } catch(e) { 
-            console.error(e); 
-            if(!silent) showToast("下載失敗：" + e.message, "error");
+        } catch (e) {
+            showAlertModal("連線遺失", "讀取本地實體檔案失敗，可能是檔案已被移動或刪除。系統將自動切換為暫存模式。");
+            await clearFileHandle(); fileHandle = null; updateDataManagementUI();
+        }
+        return false;
+    }
+
+    async function syncFromFileHandleSilently() {
+        if (!fileHandle) return false;
+        try {
+            const file = await fileHandle.getFile(); const text = await file.text();
+            if (text) {
+                const newData = JSON.parse(text);
+                if (JSON.stringify(newData) !== JSON.stringify(appData)) {
+                    appData = newData; fixDates(appData); localStorage.setItem('homeworkAppData', JSON.stringify(appData)); reRenderCurrentPage(); return true;
+                }
+            }
+        } catch (e) {} return false;
+    }
+
+    function formatDate(date, format) {
+        const year = date.getFullYear(), month = date.getMonth() + 1, day = date.getDate();
+        if (format === 'YYYY-MM-DD') return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        return `${year}/${month}/${day}`;
+    }
+
+    function getHomeworkType(typeId) { return appData.homeworkTypes.find(t => t.id === typeId) || appData.homeworkTypes.find(t => t.id === 'default') || DEFAULT_TYPES[0]; }
+
+    function isStudentCompleted(student, homeworkTypeId) {
+        const type = getHomeworkType(homeworkTypeId); const statusConfig = type.statuses.find(s => s.key === student.status);
+        return statusConfig ? statusConfig.isCompleted : false;
+    }
+
+    function showConfirmModal(title, message, onConfirm) {
+        document.getElementById('confirm-title').textContent = title;
+        document.getElementById('confirm-message').textContent = message;
+        document.getElementById('confirm-cancel').classList.remove('hidden');
+        openModal(document.getElementById('confirm-modal'));
+        
+        const confirmOk = document.getElementById('confirm-ok'), confirmCancel = document.getElementById('confirm-cancel');
+        const confirmHandler = () => { onConfirm(); closeModal(document.getElementById('confirm-modal')); cleanup(); };
+        const cancelHandler = () => { closeModal(document.getElementById('confirm-modal')); cleanup(); };
+        const cleanup = () => { confirmOk.removeEventListener('click', confirmHandler); confirmCancel.removeEventListener('click', cancelHandler); };
+        
+        confirmOk.addEventListener('click', confirmHandler); confirmCancel.addEventListener('click', cancelHandler);
+    }
+
+    function checkAndCleanupStorage() {
+        try {
+            if (!currentClassId || appData.classes.length === 0) return;
+            const currentClass = appData.classes.find(c => c.id === currentClassId);
+            if (!currentClass || !currentClass.contactBook) return;
+            const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            const limitDateString = formatDate(thirtyDaysAgo, 'YYYY-MM-DD');
+            let needsUpdate = false; const newContactBook = {};
+            for (const [dateStr, items] of Object.entries(currentClass.contactBook)) {
+                if (dateStr >= limitDateString) newContactBook[dateStr] = items; else needsUpdate = true; 
+            }
+            if (needsUpdate) { currentClass.contactBook = newContactBook; saveData(); }
+        } catch (error) {}
+    }
+
+    function updateSingleStudentUI(seat, oldStatusKey, newStatusKey, typeConfig) {
+        const btn = document.getElementById(`btn-seat-${seat}`); if (!btn) return;
+        const oldStatus = typeConfig.statuses.find(s => s.key === oldStatusKey), newStatus = typeConfig.statuses.find(s => s.key === newStatusKey);
+        if (oldStatus && newStatus) {
+            const oldRingColor = (oldStatus.color || '').replace('bg-', 'ring-').replace('-500', '-200').replace('-400', '-200');
+            const oldClasses = [...(oldStatus.color || '').split(' '), ...(oldStatus.textColor || '').split(' '), `hover:${oldRingColor}`, `focus:${oldRingColor}`].filter(Boolean);
+            btn.classList.remove(...oldClasses);
+            const newRingColor = (newStatus.color || '').replace('bg-', 'ring-').replace('-500', '-200').replace('-400', '-200');
+            const newClasses = [...(newStatus.color || '').split(' '), ...(newStatus.textColor || '').split(' '), `hover:${newRingColor}`, `focus:${newRingColor}`].filter(Boolean);
+            btn.classList.add(...newClasses);
+            const spans = btn.querySelectorAll('span'); if (spans && spans.length > 1) spans[1].textContent = newStatus.text;
+        }
+    }
+
+    function updateSummaryUI(hw) {
+        const summaryContainer = document.getElementById('status-summary'); if (!summaryContainer) return;
+        const typeConfig = getHomeworkType(hw.typeId || 'default'), statusCounts = {};
+        typeConfig.statuses.forEach(s => statusCounts[s.key] = 0);
+        (hw.students || []).forEach(student => { statusCounts[student.status] = (statusCounts[student.status] || 0) + 1; });
+        summaryContainer.innerHTML = '';
+        typeConfig.statuses.forEach(s => {
+            const count = statusCounts[s.key] || 0; const summaryChip = document.createElement('div');
+            summaryChip.className = `flex items-center space-x-2 px-4 py-1.5 rounded-xl shadow-sm ${s.color} ${s.textColor} border border-white/20 backdrop-blur-sm`;
+            summaryChip.innerHTML = `<span class="font-medium opacity-90 text-xs tracking-wide">${s.text}</span><span class="font-black text-lg leading-none">${count}</span>`;
+            summaryContainer.appendChild(summaryChip);
+        });
+    }
+
+    function updateTypeSelects() {
+        const typeSelect = document.getElementById('homework-type-select'); if (!typeSelect) return; typeSelect.innerHTML = '';
+        appData.homeworkTypes.forEach(t => {
+            const opt = document.createElement('option'); opt.value = t.id; opt.textContent = t.name; typeSelect.appendChild(opt);
+        });
+    }
+
+    function renderClassSelector() {
+        const classSelector = document.getElementById('class-selector'); if(!classSelector) return; classSelector.innerHTML = '';
+        if (appData.classes.length === 0) {
+            const option = document.createElement('option'); option.textContent = '請先建立班級';
+            classSelector.appendChild(option); classSelector.disabled = true;
+            ['show-add-modal-btn', 'student-details-btn', 'contact-book-btn', 'set-barcodes-btn'].forEach(id => { const btn = document.getElementById(id); if (btn) btn.disabled = true; });
+            return;
+        }
+        classSelector.disabled = false;
+        ['show-add-modal-btn', 'student-details-btn', 'contact-book-btn', 'set-barcodes-btn'].forEach(id => { const btn = document.getElementById(id); if (btn) btn.disabled = false; });
+        appData.classes.forEach(c => {
+            const option = document.createElement('option'); option.value = c.id; option.textContent = c.name;
+            if (c.id === currentClassId) option.selected = true; classSelector.appendChild(option);
+        });
+    }
+
+    function renderClassList() {
+        const classListDiv = document.getElementById('class-list'); if(!classListDiv) return; classListDiv.innerHTML = '';
+        appData.classes.forEach(c => {
+            const classItem = document.createElement('div');
+            classItem.className = 'flex justify-between items-center p-3.5 bg-slate-50 border border-slate-200/60 rounded-xl mb-2 transition-all hover:bg-slate-100/70';
+            classItem.innerHTML = `<span class="font-bold text-slate-800">${c.name}</span><button data-id="${c.id}" data-name="${c.name}" class="delete-class-btn text-slate-300 hover:text-rose-500 font-bold p-1 rounded-lg transition-colors text-lg leading-none">&times;</button>`;
+            classListDiv.appendChild(classItem);
+        });
+    }
+
+    function renderAllDoneList(studentsOrSeats, containerId) {
+        const container = document.getElementById(containerId); if(!container) return; container.innerHTML = '';
+        let displayList = [];
+        if(studentsOrSeats.length > 0 && typeof studentsOrSeats[0] === 'object') displayList = studentsOrSeats.map(s => s.seat).sort((a,b) => a-b);
+        else displayList = studentsOrSeats.sort((a,b) => a-b);
+
+        if (displayList.length === 0) { container.innerHTML = '<div class="col-span-full text-center text-slate-400 font-bold py-8">目前無人達成條件</div>'; return; }
+        displayList.forEach(seat => {
+            const badge = document.createElement('div'); badge.className = 'bg-emerald-50 text-emerald-700 font-black text-center py-2 rounded-xl border border-emerald-200/50 shadow-sm';
+            badge.textContent = `${seat} 號`; container.appendChild(badge);
+        });
+    }
+
+    function renderHomeworkList() {
+        const homeworkList = document.getElementById('homework-list'); if (!homeworkList) return;
+        let filteredHomeworks = appData.homeworks.filter(hw => hw.classId === currentClassId);
+        const sortMethod = document.getElementById('sort-homework') ? document.getElementById('sort-homework').value : 'time';
+        filteredHomeworks.sort((a, b) => {
+            if (sortMethod === 'time') return (b.createdAt || new Date(0)).getTime() - (a.createdAt || new Date(0)).getTime();
+            if (sortMethod === 'missing') return ((b.students || []).filter(s => !isStudentCompleted(s, b.typeId || 'default')).length) - ((a.students || []).filter(s => !isStudentCompleted(s, a.typeId || 'default')).length);
+            return 0;
+        });
+
+        homeworkList.innerHTML = '';
+        if (filteredHomeworks.length === 0) {
+            homeworkList.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center py-20 px-4"><div class="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center mb-4 border border-slate-200/40 shadow-sm shadow-slate-100"><svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><p class="text-center text-slate-400 font-semibold tracking-wide text-sm">目前的班級沒有點收項目，請點擊右上角 ✨ 新增作業</p></div>`;
+        } else {
+            filteredHomeworks.forEach(hw => {
+                const typeId = hw.typeId || 'default'; const typeConfig = getHomeworkType(typeId);
+                const statusCounts = (hw.students || []).reduce((acc, student) => { acc[student.status] = (acc[student.status] || 0) + 1; return acc; }, {});
+                const completedCount = (hw.students || []).filter(s => isStudentCompleted(s, typeId)).length;
+                let summaryHtml = '';
+                if (completedCount === (hw.students || []).length && (hw.students || []).length > 0) {
+                    summaryHtml = `<div class="text-emerald-600 font-bold bg-emerald-50/70 border border-emerald-200/50 px-3 py-1 rounded-xl text-xs inline-flex items-center gap-1">🎉 全班已到齊</div>`;
+                } else {
+                    summaryHtml = typeConfig.statuses.filter(s => statusCounts[s.key] > 0).map(s => {
+                        let textClass = 'text-slate-600 bg-slate-100/80';
+                        if(s.color.includes('blue')) textClass = 'text-blue-600 bg-blue-50/60 border-blue-100/50';
+                        else if(s.color.includes('emerald') || s.color.includes('green')) textClass = 'text-emerald-600 bg-emerald-50/60 border-emerald-100/50';
+                        else if(s.color.includes('yellow') || s.color.includes('amber')) textClass = 'text-amber-700 bg-amber-50/80 border-amber-100/50';
+                        else if(s.color.includes('red') || s.color.includes('rose')) textClass = 'text-rose-600 bg-rose-50/60 border-rose-100/50';
+                        else if(s.color.includes('purple')) textClass = 'text-purple-600 bg-purple-50/60 border-purple-100/50';
+                        return `<span class="inline-flex items-center text-xs font-bold border border-transparent px-2.5 py-1 rounded-xl ${textClass}">${s.text}<span class="ml-1 opacity-80 font-black">${statusCounts[s.key]}</span></span>`;
+                    }).join('');
+                }
+
+                const hwItem = document.createElement('div');
+                hwItem.className = 'bg-white rounded-2xl border border-slate-200/70 p-6 cursor-pointer shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 hover:-translate-y-1 hover:border-indigo-200/80 transition-all duration-300 group relative overflow-hidden active:scale-[0.99] hover-shimmer';
+                hwItem.dataset.id = hw.id;
+                
+                const createdDate = (hw.createdAt instanceof Date) ? hw.createdAt.toLocaleDateString('zh-TW') : 'N/A';
+                hwItem.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-50/20 to-transparent -translate-x-full shimmer-bar pointer-events-none"></div>
+                    <div class="flex justify-between items-start relative z-10">
+                        <div class="flex items-center gap-2.5 flex-grow min-w-0">
+                             <span class="text-[10px] font-black bg-slate-100 text-slate-400 tracking-wider px-2 py-0.5 rounded-md whitespace-nowrap uppercase">${typeConfig.name}</span>
+                            <h2 class="text-lg font-black text-slate-800 truncate tracking-tight group-hover:text-indigo-600 transition-colors" title="${hw.name}">${hw.name}</h2>
+                        </div>
+                        <div class="flex items-center gap-1 flex-shrink-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                            <button data-id="${hw.id}" class="edit-hw-btn text-slate-400 hover:text-indigo-600 p-1.5 rounded-lg hover:bg-indigo-50 transition-all"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 lg:h-4 lg:w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg></button>
+                            <button data-id="${hw.id}" class="delete-hw-btn text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-all"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 lg:h-4 lg:w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg></button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px] font-bold text-slate-400 mt-2.5 tracking-wider relative z-10"><span>👥 名單 ${(hw.students || []).length} 人</span><span>📅 ${createdDate}</span></div>
+                    <div class="mt-4 flex flex-wrap gap-1.5 relative z-10">${summaryHtml}</div>
+                `;
+                homeworkList.appendChild(hwItem);
+            });
+        }
+    }
+
+    function renderStudentGrid(homeworkId) {
+        const studentGrid = document.getElementById('student-grid'); if(!studentGrid) return;
+        const hw = appData.homeworks.find(h => h.id === homeworkId); if (!hw) return;
+        currentHomeworkId = homeworkId; document.getElementById('detail-homework-name').textContent = hw.name;
+        studentGrid.innerHTML = '';
+        const count = (hw.students || []).length; if (count === 0) return; 
+        
+        const containerWidth = studentGrid.parentElement.clientWidth - 32; 
+        const headerHeight = document.querySelector('#detail-page header').offsetHeight || 150;
+        const availableHeight = Math.max(window.innerHeight - headerHeight - 80, 200); 
+        
+        let bestCols = 1; let bestBoxSize = 0;
+        for (let c = 1; c <= count; c++) {
+            const r = Math.ceil(count / c); const gap = window.innerWidth < 640 ? 10 : 14; 
+            const sizeW = (containerWidth - (c - 1) * gap) / c; const sizeH = (availableHeight - (r - 1) * gap) / r;
+            const size = Math.min(sizeW, sizeH, 160); 
+            if (size > bestBoxSize) { bestBoxSize = size; bestCols = c; }
+        }
+        if (bestCols < 1) bestCols = 1;
+        
+        const gap = window.innerWidth < 640 ? 10 : 14;
+        studentGrid.className = `grid mx-auto`; studentGrid.style.gap = `${gap}px`;
+        studentGrid.style.gridTemplateColumns = `repeat(${bestCols}, 1fr)`;
+        studentGrid.style.width = `${Math.floor(bestCols * bestBoxSize + (bestCols - 1) * gap)}px`; studentGrid.style.maxWidth = '100%';
+
+        const typeId = hw.typeId || 'default'; const typeConfig = getHomeworkType(typeId);
+        const batchSelect = document.getElementById('batch-status-select');
+        if (batchSelect && (batchSelect.options.length === 0 || batchSelect.dataset.typeId !== typeId)) {
+            batchSelect.innerHTML = ''; batchSelect.dataset.typeId = typeId;
+            typeConfig.statuses.forEach(s => {
+                const opt = document.createElement('option'); opt.value = s.key; opt.textContent = s.text; batchSelect.appendChild(opt);
+            });
+        }
+
+        const scanSelect = document.getElementById('scan-target-status-select');
+        if (scanSelect && (scanSelect.options.length === 0 || scanSelect.dataset.typeId !== typeId)) {
+            scanSelect.innerHTML = ''; scanSelect.dataset.typeId = typeId;
+            typeConfig.statuses.forEach(s => {
+                const opt = document.createElement('option'); opt.value = s.key; opt.textContent = s.text; scanSelect.appendChild(opt);
+            });
+            const completedStatus = typeConfig.statuses.find(s => s.isCompleted);
+            if (completedStatus) scanSelect.value = completedStatus.key;
+            else if (typeConfig.statuses.length > 1) scanSelect.value = typeConfig.statuses[1].key;
+        }
+
+        (hw.students || []).forEach(student => {
+            let statusInfo = typeConfig.statuses.find(s => s.key === student.status);
+            if (!statusInfo) { statusInfo = typeConfig.statuses[0]; student.status = statusInfo.key; }
+            const studentBtn = document.createElement('button');
+            const ringColor = (statusInfo.color || '').replace('bg-', 'ring-').replace('-500', '-200').replace('-400', '-200');
+            studentBtn.id = `btn-seat-${student.seat}`;
+            studentBtn.className = `student-btn rounded-2xl shadow-sm text-center transition-all duration-300 transform hover:scale-[1.05] active:scale-90 ${statusInfo.color} ${statusInfo.textColor} flex flex-col items-center justify-center border-2 border-transparent aspect-square overflow-hidden cursor-pointer w-full h-full ring-4 ring-offset-1 ring-transparent hover:${ringColor} focus:outline-none focus:${ringColor}`;
+            studentBtn.dataset.seat = student.seat;
+            const fontSizeNum = Math.max(14, bestBoxSize * 0.32); const fontSizeText = Math.max(10, bestBoxSize * 0.13); 
+            studentBtn.innerHTML = `
+                <span class="font-black leading-none tracking-tighter select-none" style="font-size: ${fontSizeNum}px; pointer-events: none;">${student.seat}</span>
+                <span class="font-bold leading-tight mt-1 opacity-90 truncate w-full px-1 select-none" style="font-size: ${fontSizeText}px; pointer-events: none;">${statusInfo.text}</span>
+            `;
+            studentGrid.appendChild(studentBtn);
+        });
+        updateSummaryUI(hw);
+        
+        setTimeout(() => {
+            const scanContainer = document.getElementById('scan-mode-container'); const scanInput = document.getElementById('barcode-scan-input');
+            if (scanContainer && !scanContainer.classList.contains('hidden') && scanInput) scanInput.focus();
+        }, 300);
+    }
+
+    function renderStudentDetailsPage() {
+        const studentDetailsList = document.getElementById('student-details-list'); if(!studentDetailsList) return;
+        studentDetailsList.innerHTML = '';
+        const filteredHomeworks = appData.homeworks.filter(hw => hw.classId === currentClassId);
+
+        if(filteredHomeworks.length === 0) { studentDetailsList.innerHTML = '<div class="col-span-full text-center text-slate-400 py-12 font-bold">目前此班級尚無登錄作業。</div>'; return; }
+
+        const studentData = []; let maxStudentCount = 0;
+        filteredHomeworks.forEach(hw => { (hw.students || []).forEach(s => { maxStudentCount = Math.max(maxStudentCount, s.seat); }); });
+
+        if (maxStudentCount === 0) { studentDetailsList.innerHTML = '<div class="col-span-full text-center text-slate-400 py-12 font-bold">此班級尚無建立學生。</div>'; return; }
+        
+        for (let i = 1; i <= maxStudentCount; i++) {
+            const issues = []; let isExistsInAnyHw = false;
+            filteredHomeworks.forEach(hw => {
+                const typeId = hw.typeId || 'default'; const student = (hw.students || []).find(s => s.seat === i);
+                if (student) {
+                    isExistsInAnyHw = true;
+                    if (!isStudentCompleted(student, typeId)) {
+                        const typeConfig = getHomeworkType(typeId);
+                        const statusInfo = typeConfig.statuses.find(s => s.key === student.status) || typeConfig.statuses[0];
+                        issues.push({ hwName: hw.name, hwId: hw.id, statusText: statusInfo.text, colorClass: statusInfo.textColor.includes('white') ? (statusInfo.color || '').replace('bg-', 'text-') : 'text-slate-600' });
+                    }
+                }
+            });
+            if(isExistsInAnyHw) studentData.push({ seat: i, issues });
+        }
+
+        const sortMethod = document.getElementById('sort-student-detail') ? document.getElementById('sort-student-detail').value : 'number';
+        studentData.sort((a, b) => sortMethod === 'number' ? a.seat - b.seat : b.issues.length - a.issues.length);
+
+        let hasIssues = false;
+        studentData.forEach(data => {
+            if (data.issues.length === 0) return;
+            hasIssues = true;
+            const studentCard = document.createElement('div');
+            studentCard.className = 'bg-white rounded-2xl shadow-sm border border-slate-200/60 p-5 hover:shadow-md transition-all';
+            const issuesHtml = data.issues.map(issue => `<span class="mr-2 inline-block bg-slate-50 border border-slate-200/40 rounded-xl px-3 py-1 mb-2 text-xs"><span class="homework-link font-black ${issue.colorClass} cursor-pointer hover:underline" data-id="${issue.hwId}">${issue.hwName}</span> <span class="text-[10px] font-bold opacity-50 ml-1">(${issue.statusText})</span></span>`).join('');
+            studentCard.innerHTML = `
+                <h3 class="text-lg font-black text-slate-800 flex justify-between items-center mb-3">
+                    <span class="bg-slate-100 px-3 py-1 rounded-xl">${data.seat} 號</span>
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2.5 py-1 rounded-xl border border-rose-100">未完成: ${data.issues.length}</span>
+                </h3>
+                <div class="mt-2 flex flex-wrap">${issuesHtml}</div>
+            `;
+            studentDetailsList.appendChild(studentCard);
+        });
+        
+        if(!hasIssues) studentDetailsList.innerHTML = `<div class="col-span-full bg-emerald-50 border border-emerald-100 rounded-3xl p-10 text-center shadow-inner"><div class="text-4xl mb-3">🏆</div><p class="text-emerald-700 font-extrabold text-lg">全班所有作業均已準時點收完成！</p></div>`;
+    }
+    
+    function renderHomeworkTypesPage() {
+        const list = document.getElementById('types-list'); if(!list) return; list.innerHTML = '';
+        appData.homeworkTypes.forEach((type, typeIndex) => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-2xl shadow-sm border border-slate-200/60 p-6 hover:shadow-md transition-shadow relative overflow-hidden';
+            const statusesHtml = type.statuses.map((status, statusIndex) => {
+                return `
+                    <div class="flex items-center gap-3 mb-2.5 bg-slate-50 p-2 rounded-xl border border-slate-200/40">
+                        <div class="color-dot ${status.color} w-5 h-5 shadow-sm border-2 border-white cursor-pointer rounded-full flex-shrink-0 transition-transform hover:scale-110" data-type-index="${typeIndex}" data-status-index="${statusIndex}"></div>
+                        <input type="text" class="status-name-input bg-transparent font-bold focus:outline-none focus:border-b-2 focus:border-indigo-400 px-1 py-0.5 w-24 text-sm text-slate-700" value="${status.text}" data-type-index="${typeIndex}" data-status-index="${statusIndex}">
+                        <label class="flex items-center text-[11px] font-black text-slate-400 cursor-pointer select-none ml-auto bg-white px-2 py-1 rounded-lg border border-slate-200 shadow-sm hover:text-slate-600">
+                            <input type="checkbox" class="mr-1.5 is-completed-check w-3.5 h-3.5 text-indigo-500 rounded border-slate-300 focus:ring-indigo-500" ${status.isCompleted ? 'checked' : ''} data-type-index="${typeIndex}" data-status-index="${statusIndex}"> 完成
+                        </label>
+                        <button class="delete-status-btn text-slate-300 hover:text-rose-500 p-1 rounded transition-colors" data-type-index="${typeIndex}" data-status-index="${statusIndex}">&times;</button>
+                    </div>`;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${typeIndex === 0 ? 'from-slate-300 to-slate-400' : 'from-indigo-500 to-violet-500'}"></div>
+                <div class="flex justify-between items-center mb-4 gap-2">
+                    <input type="text" class="type-name-input text-xl font-black text-slate-800 focus:outline-none focus:bg-slate-50 rounded-xl px-2 py-1 -ml-2 bg-transparent w-full transition-colors" value="${type.name}" data-type-index="${typeIndex}">
+                    <button class="delete-type-btn text-slate-400 hover:text-rose-500 text-xs font-bold bg-slate-100 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl transition-colors" data-type-index="${typeIndex}" ${type.id === 'default' ? 'disabled style="opacity:0.2; cursor:not-allowed;"' : ''}>刪除種類</button>
+                </div>
+                <div class="space-y-1 mb-4">${statusesHtml}</div>
+                <button class="add-status-btn w-full py-2.5 border border-dashed border-slate-200 text-slate-400 font-bold rounded-xl hover:bg-slate-50 hover:text-indigo-500 hover:border-indigo-200 transition-all text-xs flex items-center justify-center gap-1" data-type-index="${typeIndex}">+ 新增狀態</button>
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    function renderContactBookItems() {
+        const blackboard = document.getElementById('blackboard-content'); if(!blackboard) return;
+        blackboard.innerHTML = ''; 
+        blackboard.style.fontSize = `${blackboardFontSize}rem`; blackboard.style.lineHeight = `${blackboardLineHeight}`;
+        
+        if (!currentClassId) return;
+        const currentClass = appData.classes.find(c => c.id === currentClassId);
+        const dateDisplay = document.getElementById('contact-book-date'); if(dateDisplay) dateDisplay.textContent = formatDate(selectedDate);
+        const dateString = formatDate(selectedDate, 'YYYY-MM-DD'); const items = currentClass?.contactBook?.[dateString] || [];
+
+        if (items.length === 0) { blackboard.innerHTML = `<p class="text-white/20 italic text-center mt-12 text-sm select-none" style="font-family: sans-serif;">今日無聯絡記事。請在下方欄位書寫...</p>`; return; }
+
+        items.forEach((item, index) => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'flex items-start justify-between group p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/10';
+            itemEl.innerHTML = `
+                <div class="flex-grow pt-0.5"><span class="mr-3 font-bold opacity-60">${index + 1}.</span><span class="whitespace-pre-wrap">${item}</span></div>
+                <div class="flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all ml-4 flex-shrink-0 bg-slate-900/60 backdrop-blur-md rounded-xl p-1 border border-white/10 shadow-xl">
+                    <button class="to-hw-btn w-8 h-8 flex items-center justify-center rounded-lg bg-teal-500/20 text-teal-300 hover:bg-teal-500 hover:text-white transition-all font-bold" data-index="${index}" title="轉為作業發布">📖</button>
+                    <button class="edit-contact-btn w-8 h-8 flex items-center justify-center rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-white transition-all font-bold" data-index="${index}" title="編輯內文">✏️</button>
+                    <button class="delete-contact-item-btn w-8 h-8 flex items-center justify-center rounded-lg bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white transition-all font-bold text-lg leading-none" data-index="${index}" title="擦除此項">&times;</button>
+                </div>
+            `;
+            blackboard.appendChild(itemEl);
+        });
+    }
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendar-grid'); const monthYear = document.getElementById('current-month-year');
+        if(!grid || !monthYear) return; grid.innerHTML = '';
+        const year = calendarDate.getFullYear(), month = calendarDate.getMonth();
+        monthYear.textContent = `${year}年 ${month + 1}月`;
+        const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
+        for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+        const todayString = formatDate(new Date(), 'YYYY-MM-DD'); const selectedDateString = formatDate(selectedDate, 'YYYY-MM-DD');
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayEl = document.createElement('button');
+            dayEl.className = 'calendar-day h-10 w-10 sm:h-11 sm:w-11 mx-auto flex items-center justify-center rounded-xl font-bold transition-all';
+            dayEl.textContent = day; dayEl.dataset.day = day;
+            const currentDayString = formatDate(new Date(year, month, day), 'YYYY-MM-DD');
+            if (currentDayString === selectedDateString) dayEl.classList.add('bg-indigo-600', 'text-white', 'shadow-md', 'shadow-indigo-200', 'scale-105');
+            else if (currentDayString === todayString) dayEl.classList.add('bg-indigo-50', 'text-indigo-600', 'border', 'border-indigo-200');
+            else dayEl.classList.add('text-slate-600', 'hover:bg-slate-100', 'hover:text-indigo-600');
+            grid.appendChild(dayEl);
         }
     }
 
     function updateDataManagementUI() {
-        const cloudStatus = document.getElementById('cloud-sync-status'), loginBtn = document.getElementById('google-login-btn'), cloudActions = document.getElementById('cloud-actions');
-        
-        if (currentUser) {
-            if(cloudStatus) cloudStatus.innerHTML = `狀態：已安全登入 <br><span class="text-sky-900 font-bold bg-white px-3 py-1.5 rounded-xl inline-block mt-2 shadow-sm border border-sky-100 text-xs tracking-wide">👤 ${currentUser.displayName || currentUser.email}</span>`;
-            if(loginBtn) loginBtn.classList.add('hidden');
-            if(cloudActions) cloudActions.classList.remove('hidden');
+        const statusText = document.getElementById('current-file-status'), linkBtn = document.getElementById('link-file-btn'), unlinkBtn = document.getElementById('unlink-file-btn'), backupList = document.getElementById('auto-backup-list');
+
+        if(!statusText) return;
+        if (fileHandle) {
+            statusText.innerHTML = `狀態：已安全對齊本地實體檔案 <br><span class="text-indigo-900 font-bold bg-white px-3 py-1.5 rounded-xl inline-block mt-3 shadow-sm border border-indigo-100 text-xs tracking-wide">📄 ${fileHandle.name}</span>`;
+            linkBtn.textContent = "變更硬碟資料檔"; unlinkBtn.classList.remove('hidden');
         } else {
-            if(cloudStatus) cloudStatus.innerHTML = "狀態：未登入，點擊下方按鈕登入以啟用雲端同步。";
-            if(loginBtn) loginBtn.classList.remove('hidden');
-            if(cloudActions) cloudActions.classList.add('hidden');
+            statusText.textContent = "狀態：暫存模式 (重整或關閉瀏覽器資料可能遺失)"; statusText.className = "text-xs font-bold text-amber-600 bg-amber-50 border border-amber-100 p-3 rounded-xl mb-4";
+            linkBtn.textContent = "綁定硬碟實體 .json 檔案"; unlinkBtn.classList.add('hidden');
         }
-        updateCloudStorageUI(); // 呼叫空間分析更新
+        
+        if (!window.showSaveFilePicker) {
+            statusText.textContent = "狀態：您的瀏覽器安全層級不支援直接寫入系統，請定時手動下載 JSON 備份。"; statusText.className = "text-xs font-bold text-rose-600 bg-rose-50 p-3 rounded-xl border border-rose-100 mb-4";
+            linkBtn.classList.add('hidden'); unlinkBtn.classList.add('hidden');
+        }
+
+        if(backupList) {
+            backupList.innerHTML = '';
+            const keys = Object.keys(localStorage).filter(k => k.startsWith('hw_backup_')).sort().reverse();
+            if (keys.length === 0) backupList.innerHTML = '<p class="text-xs font-bold text-slate-400 py-2">無自動備份快取。</p>';
+            else {
+                keys.forEach(k => {
+                    const dateStr = k.replace('hw_backup_', ''); const btn = document.createElement('button');
+                    btn.className = 'w-full bg-white border border-slate-200 text-slate-700 text-xs font-bold py-2.5 px-3.5 rounded-xl hover:bg-slate-50 transition-colors flex justify-between items-center shadow-sm';
+                    btn.innerHTML = `<span class="flex items-center gap-1.5 text-slate-500">📅 ${dateStr}</span> <span class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-lg text-[10px] shadow-sm transition-colors">倒退還原</span>`;
+                    btn.onclick = () => {
+                        showConfirmModal('自動備份覆蓋還原', `確定要將所有班級與作業還原至 ${dateStr} 的進度嗎？目前的修改將會被完全洗掉！`, async () => {
+                            const dataStr = localStorage.getItem(k);
+                            if (dataStr) { appData = JSON.parse(dataStr); fixDates(appData); await saveData(); closeModal(document.getElementById('data-management-modal')); showToast('已成功還原備份！', 'success'); setTimeout(() => window.location.reload(), 500); }
+                        });
+                    };
+                    backupList.appendChild(btn);
+                });
+            }
+        }
     }
+
+    function pushPageState(stateObj, hash) {
+        try { if (history.state && history.state.page === stateObj.page && history.state.id === stateObj.id) return; history.pushState(stateObj, '', hash); } catch (e) {}
+    }
+
+    function hideAllPages() {
+        if (currentPage) scrollPositions[currentPage] = window.scrollY || document.documentElement.scrollTop;
+        ['main-page', 'detail-page', 'student-details-page', 'contact-book-page', 'homework-types-page'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.classList.add('hidden');
+        });
+    }
+
+    function restoreScroll(targetPageId) { currentPage = targetPageId; window.scrollTo({ top: scrollPositions[targetPageId] || 0, behavior: 'auto' }); }
+
+    function showMainPage(fromHistory = false) {
+        hideAllPages(); const mainPageEl = document.getElementById('main-page'); if (mainPageEl) mainPageEl.classList.remove('hidden');
+        if (!fromHistory) pushPageState({ page: 'main' }, '#main');
+        checkAndCleanupStorage(); updateTypeSelects(); renderClassSelector(); renderHomeworkList();
+        currentHomeworkId = null; document.getElementById('detail-page').dataset.from = ''; restoreScroll('main-page');
+    }
+
+    function showDetailPage(homeworkId, fromHistory = false) {
+        hideAllPages(); const detailPageEl = document.getElementById('detail-page'); if (detailPageEl) detailPageEl.classList.remove('hidden');
+        if (!fromHistory) pushPageState({ page: 'detail', id: homeworkId }, '#detail');
+        renderStudentGrid(homeworkId); restoreScroll('detail-page');
+    }
+
+    function showStudentDetailsPage(fromHistory = false) {
+        hideAllPages(); const studentPageEl = document.getElementById('student-details-page'); if (studentPageEl) studentPageEl.classList.remove('hidden');
+        if (!fromHistory) pushPageState({ page: 'student-details' }, '#student-details');
+        renderStudentDetailsPage(); restoreScroll('student-details-page');
+    }
+
+    function showContactBookPage(fromHistory = false) {
+        hideAllPages(); const contactPageEl = document.getElementById('contact-book-page'); if (contactPageEl) contactPageEl.classList.remove('hidden');
+        if (!fromHistory) pushPageState({ page: 'contact-book' }, '#contact-book');
+        selectedDate = new Date(); const currentClass = appData.classes.find(c => c.id === currentClassId);
+        const titleEl = document.getElementById('contact-book-title'); if (titleEl) titleEl.textContent = `${currentClass?.name || ''} 聯絡簿`;
+        renderContactBookItems(); restoreScroll('contact-book-page');
+    }
+
+    function showHomeworkTypesPage(fromHistory = false) {
+        hideAllPages(); const typePageEl = document.getElementById('homework-types-page'); if (typePageEl) typePageEl.classList.remove('hidden');
+        if (!fromHistory) pushPageState({ page: 'homework-types' }, '#homework-types');
+        renderHomeworkTypesPage(); restoreScroll('homework-types-page');
+    }
+
+    window.addEventListener('popstate', (e) => {
+        document.querySelectorAll('.modal:not(.hidden)').forEach(modal => closeModal(modal));
+        const state = e.state;
+        if (!state || state.page === 'main') showMainPage(true);
+        else if (state.page === 'detail') showDetailPage(state.id, true);
+        else if (state.page === 'student-details') showStudentDetailsPage(true);
+        else if (state.page === 'contact-book') showContactBookPage(true);
+        else if (state.page === 'homework-types') showHomeworkTypesPage(true);
+    });
 
     function openModal(modal) {
         if(!modal) return; modal.classList.remove('hidden');
-        setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
-        updateDataManagementUI(); // 每次打開時強制刷新
+        setTimeout(() => { modal.classList.remove('opacity-0'); const content = modal.querySelector('.modal-content, .confirm-modal-content, #date-picker-content'); if(content) content.classList.remove('scale-95'); }, 10);
     }
     
     function closeModal(modal) {
         if(!modal) return; modal.classList.add('opacity-0');
-        setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        const content = modal.querySelector('.modal-content, .confirm-modal-content, #date-picker-content'); if(content) content.classList.add('scale-95');
+        setTimeout(() => { modal.classList.add('hidden'); const form = modal.querySelector('form'); if(form) form.reset(); }, 300);
     }
 
-    // 事件綁定 (擷取重要部份)
-    document.getElementById('data-management-btn')?.addEventListener('click', () => { 
-        updateDataManagementUI(); 
-        openModal(document.getElementById('data-management-modal')); 
-    });
+    function fullRender() { updateTypeSelects(); renderClassSelector(); renderClassList(); renderHomeworkList(); }
+    
+    // --- 核心邏輯與事件綁定 ---
+    function setupButtonEvents() {
+        const bindClick = (id, handler) => { const el = document.getElementById(id); if (el) el.addEventListener('click', handler); };
+        const bindChange = (id, handler) => { const el = document.getElementById(id); if (el) el.addEventListener('change', handler); };
+        const bindSubmit = (id, handler) => { const el = document.getElementById(id); if (el) el.addEventListener('submit', handler); };
 
-    document.getElementById('google-login-btn')?.addEventListener('click', async () => {
-        if (!fbAuth) { showToast("尚未設定 Firebase 參數", "error"); return; }
-        try {
-            const provider = new GoogleAuthProvider();
-            await signInWithPopup(fbAuth, provider);
-            showToast("✅ Google 登入成功！", "success");
-        } catch (error) {
-            showToast("登入失敗：" + error.message, "error");
+        bindClick('intro-btn', () => openModal(document.getElementById('intro-modal')));
+        bindClick('show-add-modal-btn', () => {
+            const modal = document.getElementById('add-homework-modal');
+            document.getElementById('homework-modal-title').textContent = '新增作業'; modal.querySelector('form').reset(); document.getElementById('edit-homework-id').value = '';
+            document.getElementById('student-count-container').style.display = 'grid'; document.getElementById('homework-type-container').style.display = 'block'; document.getElementById('missing-seats-hint').style.display = 'block';
+            updateTypeSelects(); 
+            if (currentClassId) {
+                const currentClass = appData.classes.find(c => c.id === currentClassId);
+                if (currentClass && currentClass.lastMaxSeat) {
+                    document.getElementById('student-count').value = currentClass.lastMaxSeat; document.getElementById('homework-missing-seats').value = currentClass.lastMissingSeats || '';
+                } else {
+                    const classHws = appData.homeworks.filter(h => h.classId === currentClassId);
+                    if (classHws.length > 0) {
+                         let maxSeat = 0; (classHws[classHws.length-1].students || []).forEach(s => maxSeat = Math.max(maxSeat, s.seat)); document.getElementById('student-count').value = maxSeat || 30;
+                    } else document.getElementById('student-count').value = 30;
+                    document.getElementById('homework-missing-seats').value = '';
+                }
+            }
+            openModal(modal);
+        });
+
+        bindClick('manage-classes-btn', () => { renderClassList(); openModal(document.getElementById('manage-classes-modal')); });
+        bindClick('student-details-btn', () => showStudentDetailsPage());
+        bindClick('contact-book-btn', () => showContactBookPage());
+        bindClick('show-types-modal-btn', () => showHomeworkTypesPage());
+        bindClick('data-management-btn', () => { updateDataManagementUI(); openModal(document.getElementById('data-management-modal')); });
+
+        const renderBarcodeInputs = (maxSeat, currentClass) => {
+            const container = document.getElementById('barcode-inputs-container');
+            const currentInputs = container.querySelectorAll('.barcode-input');
+            const tempValues = {};
+            currentInputs.forEach(input => { if(input.value.trim()) tempValues[input.dataset.seat] = input.value.trim(); });
+
+            container.innerHTML = '';
+            if(!currentClass.studentBarcodes) currentClass.studentBarcodes = {};
+
+            for (let i = 1; i <= maxSeat; i++) {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200/40 shadow-sm';
+                const currentBarcode = tempValues[i] !== undefined ? tempValues[i] : (currentClass.studentBarcodes[i] || '');
+                div.innerHTML = `
+                    <span class="font-black text-slate-500 w-12 text-center text-sm">${i} 號</span>
+                    <input type="text" class="barcode-input flex-grow block rounded-lg border-slate-200 bg-white p-2.5 text-sm font-bold shadow-sm focus:ring-indigo-500 focus:border-indigo-500 font-mono transition-colors" data-seat="${i}" value="${currentBarcode}" placeholder="掃描或輸入條碼">
+                `;
+                container.appendChild(div);
+            }
+        };
+
+        bindClick('set-barcodes-btn', () => {
+            if (!currentClassId) return; const currentClass = appData.classes.find(c => c.id === currentClassId); if (!currentClass) return;
+            const maxSeat = currentClass.lastMaxSeat || 30; document.getElementById('barcode-max-seat').value = maxSeat;
+            document.getElementById('barcode-inputs-container').innerHTML = ''; renderBarcodeInputs(maxSeat, currentClass);
+            openModal(document.getElementById('barcodes-modal'));
+        });
+
+        bindClick('update-barcode-seats-btn', () => {
+            const newMax = parseInt(document.getElementById('barcode-max-seat').value);
+            if (isNaN(newMax) || newMax < 1 || newMax > 100) { showToast("請輸入有效的人數 (1-100)", "error"); return; }
+            if (!currentClassId) return; const currentClass = appData.classes.find(c => c.id === currentClassId); if (!currentClass) return;
+            renderBarcodeInputs(newMax, currentClass); showToast("人數列表已更新，請記得點擊儲存！", "info");
+        });
+
+        bindClick('auto-gen-barcodes-btn', () => {
+            const inputs = document.querySelectorAll('.barcode-input');
+            if (inputs.length < 3) {
+                showToast("班級人數不足以進行推算", "error");
+                return;
+            }
+            const code1 = inputs[0].value.trim();
+            const code2 = inputs[1].value.trim();
+            const code3 = inputs[2].value.trim();
+            
+            if (!code1 || !code2 || !code3) {
+                showToast("請先在下方手動輸入或掃描 1號 到 3號 的條碼！", "error");
+                return;
+            }
+
+            let prefixLen = 0;
+            const minLen = Math.min(code1.length, code2.length, code3.length);
+            while(prefixLen < minLen && code1[prefixLen] === code2[prefixLen] && code1[prefixLen] === code3[prefixLen]) {
+                prefixLen++;
+            }
+            
+            let suffixLen = 0;
+            const minLenFromEnd = Math.min(code1.length - prefixLen, code2.length - prefixLen, code3.length - prefixLen);
+            while(suffixLen < minLenFromEnd && 
+                  code1[code1.length - 1 - suffixLen] === code2[code2.length - 1 - suffixLen] && 
+                  code1[code1.length - 1 - suffixLen] === code3[code3.length - 1 - suffixLen]) {
+                suffixLen++;
+            }
+            
+            const numStr1 = code1.substring(prefixLen, code1.length - suffixLen);
+            const numStr2 = code2.substring(prefixLen, code2.length - suffixLen);
+            const numStr3 = code3.substring(prefixLen, code3.length - suffixLen);
+            
+            const n1 = parseInt(numStr1, 10);
+            const n2 = parseInt(numStr2, 10);
+            const n3 = parseInt(numStr3, 10);
+            
+            if (isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+                showToast("無法辨識規則！請確認條碼中間包含規律的數字。", "error");
+                return;
+            }
+            
+            const diff1 = n2 - n1;
+            const diff2 = n3 - n2;
+            
+            if (diff1 !== diff2) {
+                showToast("無法推算！前三項的數字並非等差數列。", "error");
+                return;
+            }
+            
+            if (diff1 === 0) {
+                showToast("無法推算！條碼數字沒有變動。", "error");
+                return;
+            }
+            
+            const padLen = numStr1.length;
+            const prefix = code1.substring(0, prefixLen);
+            const suffix = code1.substring(code1.length - suffixLen);
+            
+            inputs.forEach((input, index) => {
+                if (index < 3) return; 
+                const seat = parseInt(input.dataset.seat, 10);
+                const currentNum = n1 + (seat - 1) * diff1;
+                let currentNumStr = Math.abs(currentNum).toString().padStart(padLen, '0');
+                if (currentNum < 0) currentNumStr = '-' + currentNumStr;
+                
+                input.value = prefix + currentNumStr + suffix;
+            });
+            
+            showToast("✅ 已成功自動推算全班條碼！請點擊最下方儲存配置。", "success");
+        });
+
+        bindClick('save-barcodes-btn', async () => {
+            if (!currentClassId) return; const currentClass = appData.classes.find(c => c.id === currentClassId); if (!currentClass) return;
+            const inputs = document.querySelectorAll('.barcode-input');
+            currentClass.studentBarcodes = {};
+            inputs.forEach(input => { const seat = input.dataset.seat; const val = input.value.trim(); if (val) currentClass.studentBarcodes[seat] = val; });
+            const newMax = parseInt(document.getElementById('barcode-max-seat').value);
+            if(!isNaN(newMax) && newMax > 0) currentClass.lastMaxSeat = newMax;
+            await saveData(); closeModal(document.getElementById('barcodes-modal')); showToast("學生條碼設定儲存成功！", "success");
+        });
+
+        bindClick('back-to-main-btn', () => {
+            const detailPage = document.getElementById('detail-page');
+            if (detailPage && detailPage.dataset.from === 'student-details-page') { showStudentDetailsPage(); detailPage.dataset.from = ''; } else showMainPage();
+        });
+        
+        bindClick('back-from-student-details-btn', () => showMainPage());
+        bindClick('back-from-contact-book-btn', () => showMainPage());
+        bindClick('back-from-types-btn', () => showMainPage());
+
+        const modeManualBtn = document.getElementById('mode-manual-btn');
+        const modeScanBtn = document.getElementById('mode-scan-btn');
+        const scanContainer = document.getElementById('scan-mode-container');
+
+        const switchMode = (mode) => {
+            if (mode === 'manual') {
+                modeManualBtn.classList.add('bg-white', 'shadow-sm', 'border-slate-200/80', 'text-indigo-600');
+                modeManualBtn.classList.remove('text-slate-500', 'hover:text-slate-700', 'hover:bg-slate-200/50', 'border-transparent');
+                modeScanBtn.classList.add('text-slate-500', 'hover:text-slate-700', 'hover:bg-slate-200/50', 'border-transparent');
+                modeScanBtn.classList.remove('bg-white', 'shadow-sm', 'border-slate-200/80', 'text-indigo-600');
+                scanContainer.classList.add('hidden');
+            } else {
+                modeScanBtn.classList.add('bg-white', 'shadow-sm', 'border-slate-200/80', 'text-indigo-600');
+                modeScanBtn.classList.remove('text-slate-500', 'hover:text-slate-700', 'hover:bg-slate-200/50', 'border-transparent');
+                modeManualBtn.classList.add('text-slate-500', 'hover:text-slate-700', 'hover:bg-slate-200/50', 'border-transparent');
+                modeManualBtn.classList.remove('bg-white', 'shadow-sm', 'border-slate-200/80', 'text-indigo-600');
+                scanContainer.classList.remove('hidden');
+                setTimeout(() => { const scanInput = document.getElementById('barcode-scan-input'); if(scanInput) scanInput.focus(); }, 100);
+            }
+        };
+
+        if(modeManualBtn) modeManualBtn.addEventListener('click', () => switchMode('manual'));
+        if(modeScanBtn) modeScanBtn.addEventListener('click', () => switchMode('scan'));
+
+        bindClick('show-all-done-btn', () => {
+            if (!currentHomeworkId) return; const hw = appData.homeworks.find(h => h.id === currentHomeworkId); if (!hw) return;
+            const doneStudents = (hw.students || []).filter(s => isStudentCompleted(s, hw.typeId || 'default')); renderAllDoneList(doneStudents, 'all-done-list'); openModal(document.getElementById('all-done-modal'));
+        });
+
+        bindClick('show-overall-all-done-btn', () => {
+            const filteredHomeworks = appData.homeworks.filter(hw => hw.classId === currentClassId);
+            if (filteredHomeworks.length === 0) { renderAllDoneList([], 'overall-all-done-list'); openModal(document.getElementById('overall-all-done-modal')); return; }
+            const problematicStudents = new Set(); let maxStudentCount = 0;
+            filteredHomeworks.forEach(hw => { (hw.students || []).forEach(student => { maxStudentCount = Math.max(maxStudentCount, student.seat); if (!isStudentCompleted(student, hw.typeId || 'default')) problematicStudents.add(student.seat); }); });
+            const allDoneStudents = [];
+            for (let i = 1; i <= maxStudentCount; i++) {
+                if (filteredHomeworks.some(h => (h.students || []).find(s => s.seat === i)) && !problematicStudents.has(i)) allDoneStudents.push(i);
+            }
+            renderAllDoneList(allDoneStudents, 'overall-all-done-list'); openModal(document.getElementById('overall-all-done-modal'));
+        });
+
+        const studentGrid = document.getElementById('student-grid');
+        if (studentGrid) {
+            studentGrid.addEventListener('click', async (e) => {
+                const studentBtn = e.target.closest('.student-btn');
+                if (studentBtn) {
+                    const seat = parseInt(studentBtn.dataset.seat); const hw = appData.homeworks.find(h => h.id === currentHomeworkId);
+                    if (!hw || !hw.students) return;
+                    const studentIndex = hw.students.findIndex(s => s.seat === seat); if (studentIndex === -1) return;
+                    
+                    const student = hw.students[studentIndex]; const typeConfig = getHomeworkType(hw.typeId);
+                    let currentIndex = typeConfig.statuses.findIndex(s => s.key === student.status); if(currentIndex === -1) currentIndex = 0;
+
+                    const nextIndex = (currentIndex + 1) % typeConfig.statuses.length;
+                    const oldStatus = student.status; const newStatus = typeConfig.statuses[nextIndex].key;
+                    
+                    hw.students[studentIndex].status = newStatus;
+                    updateSingleStudentUI(seat, oldStatus, newStatus, typeConfig); updateSummaryUI(hw); saveData();
+                }
+            });
         }
-    });
 
-    document.getElementById('google-logout-btn')?.addEventListener('click', async () => {
-        if (!fbAuth) return;
-        try { await signOut(fbAuth); showToast("已安全登出。", "info"); } catch(e) {}
-    });
+        const scanInput = document.getElementById('barcode-scan-input');
+        if (scanInput) {
+            scanInput.addEventListener('keydown', async (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); const barcode = scanInput.value.trim(); scanInput.value = '';
+                    if (!barcode || !currentClassId || !currentHomeworkId) return;
 
-    document.getElementById('cloud-load-btn')?.addEventListener('click', async () => {
-        await loadDataFromCloud(false);
-    });
+                    const currentClass = appData.classes.find(c => c.id === currentClassId), hw = appData.homeworks.find(h => h.id === currentHomeworkId);
+                    if (!currentClass || !hw || !currentClass.studentBarcodes) { showToast(`目前班級沒有設定任何學生條碼`, "error"); return; }
 
-    document.querySelectorAll('.cancel-btn, #close-warning-btn').forEach(btn => btn.addEventListener('click', (e) => closeModal(e.target.closest('.modal'))));
+                    let foundSeat = null;
+                    for (const [seat, code] of Object.entries(currentClass.studentBarcodes)) {
+                        if (code === barcode) { foundSeat = parseInt(seat); break; }
+                    }
+                    if (!foundSeat) { showToast(`找不到對應條碼 (${barcode}) 的學生`, "error"); return; }
 
-    // 初始化模擬 (其餘龐大頁面渲染邏輯因篇幅已簡化，請搭配您原本的邏輯運行)
-    const localData = localStorage.getItem('homeworkAppData');
-    if (localData) { appData = JSON.parse(localData); }
-    document.getElementById('main-page').classList.remove('hidden');
+                    const studentIndex = hw.students.findIndex(s => s.seat === foundSeat);
+                    if (studentIndex === -1) { showToast(`${foundSeat} 號不在本次作業名單中（可能設為缺號）`, "error"); return; }
 
+                    const student = hw.students[studentIndex]; const typeConfig = getHomeworkType(hw.typeId);
+                    const targetStatusKey = document.getElementById('scan-target-status-select').value;
+                    const oldStatus = student.status, newStatus = targetStatusKey;
+                    
+                    hw.students[studentIndex].status = newStatus;
+                    updateSingleStudentUI(foundSeat, oldStatus, newStatus, typeConfig); updateSummaryUI(hw);
+                    
+                    const btn = document.getElementById(`btn-seat-${foundSeat}`);
+                    if (btn) { btn.classList.add('scale-[1.1]', 'ring-indigo-400'); setTimeout(() => btn.classList.remove('scale-[1.1]', 'ring-indigo-400'), 250); }
+
+                    const targetStatusText = typeConfig.statuses.find(s => s.key === newStatus)?.text || '已更新';
+                    showToast(`${foundSeat} 號狀態更新：${targetStatusText}`, "success"); saveData();
+                }
+            });
+        }
+
+        bindClick('link-file-btn', async () => {
+            try {
+                if (!window.showSaveFilePicker) throw new Error("您的瀏覽器不支援此功能");
+                const handle = await window.showSaveFilePicker({ suggestedName: '作業點收資料.json', types: [{ description: 'JSON 檔案', accept: { 'application/json': ['.json'] } }] });
+                fileHandle = handle; await saveFileHandle(handle); await syncFromFileHandle(); await saveData(); 
+                document.getElementById('sync-banner').classList.add('hidden'); document.body.classList.remove('has-banner');
+                updateDataManagementUI(); fullRender(); showToast("已安全連結硬碟儲存檔案！", "success");
+            } catch (e) { if (e.name !== 'AbortError') showAlertModal("無法連結檔案", "錯誤細節：" + e.message); }
+        });
+
+        bindClick('unlink-file-btn', async () => {
+            showConfirmModal('解除安全連結', '確定要解除本地硬碟檔案連結嗎？解除後資料將僅儲存於瀏覽器暫存區。', async () => {
+                await clearFileHandle(); fileHandle = null; updateDataManagementUI(); showToast("已解除硬碟檔案連結", "info");
+            });
+        });
+
+        bindClick('export-data-btn', () => {
+            const exportHw = document.getElementById('export-hw-chk').checked, exportTypes = document.getElementById('export-types-chk').checked, exportContact = document.getElementById('export-contact-chk').checked;
+            let exportData = JSON.parse(JSON.stringify(appData));
+            if (!exportHw) exportData.homeworks = []; if (!exportTypes) exportData.homeworkTypes = DEFAULT_TYPES; 
+            if (!exportContact) exportData.classes.forEach(c => c.contactBook = {});
+            else {
+                const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30); const limitDateStr = formatDate(thirtyDaysAgo, 'YYYY-MM-DD');
+                exportData.classes.forEach(c => {
+                    if (c.contactBook) {
+                        const filteredBook = {};
+                        for (const [date, items] of Object.entries(c.contactBook)) { if (date >= limitDateStr) filteredBook[date] = items; }
+                        c.contactBook = filteredBook;
+                    }
+                });
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData));
+            const downloadAnchorNode = document.createElement('a'); downloadAnchorNode.setAttribute("href", dataStr); downloadAnchorNode.setAttribute("download", `作業點收備份_${formatDate(new Date(), 'YYYY-MM-DD')}.json`);
+            document.body.appendChild(downloadAnchorNode); downloadAnchorNode.click(); downloadAnchorNode.remove(); closeModal(document.getElementById('data-management-modal'));
+            showToast("已成功下載 JSON 備份檔！", "success");
+        });
+
+        bindClick('trigger-import-btn', () => document.getElementById('import-file-input').click());
+
+        bindChange('import-file-input', (e) => {
+            const file = e.target.files[0]; if (!file) return; const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if(!data.classes || !data.homeworks || !data.homeworkTypes) throw new Error("無效的備份檔案格式");
+                    
+                    showConfirmModal('手動還原覆蓋資料', '確定要將此 JSON 備份完整覆蓋目前所有的班級與作業嗎？這將無法復原！', async () => {
+                         closeModal(document.getElementById('data-management-modal')); 
+                         appData = data; 
+                         fixDates(appData); 
+                         localStorage.setItem('homeworkAppData', JSON.stringify(appData));
+                         try { await saveData(); } catch(saveErr) { console.warn("實體檔案同步略過"); }
+                         showToast("手動資料匯入還原完成！", "success"); 
+                         setTimeout(() => window.location.reload(), 500); 
+                    });
+                } catch(err) { showAlertModal("匯入失敗", "讀取備份檔案失敗：" + err.message); }
+            };
+            reader.readAsText(file); e.target.value = ''; 
+        });
+
+        bindSubmit('add-homework-form', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit-homework-id').value, name = document.getElementById('homework-name').value.trim(), typeId = document.getElementById('homework-type-select').value;
+            closeModal(document.getElementById('add-homework-modal'));
+            if (editId) { 
+                const hw = appData.homeworks.find(h => h.id === editId); if (hw && name) { hw.name = name; await saveData(); showToast("修改作業名稱成功！"); renderHomeworkList(); }
+            } else { 
+                const studentCount = parseInt(document.getElementById('student-count').value), missingInput = document.getElementById('homework-missing-seats').value;
+                let missingSeats = [];
+                const parts = missingInput.replace(/，/g, ',').split(/[\s,]+/);
+                for (let part of parts) {
+                    part = part.trim(); if (!part) continue;
+                    if (part.includes('-')) {
+                        const [startStr, endStr] = part.split('-'); const start = parseInt(startStr), end = parseInt(endStr);
+                        if (!isNaN(start) && !isNaN(end) && start <= end) { for (let i = start; i <= end; i++) missingSeats.push(i); }
+                    } else {
+                        const num = parseInt(part); if (!isNaN(num)) missingSeats.push(num);
+                    }
+                }
+                if (name && studentCount > 0 && currentClassId) {
+                    const typeConfig = getHomeworkType(typeId); const initialStatus = typeConfig.statuses[0].key; const students = [];
+                    for (let i = 1; i <= studentCount; i++) { if (!missingSeats.includes(i)) students.push({ seat: i, status: initialStatus }); }
+                    const currentClass = appData.classes.find(c => c.id === currentClassId);
+                    if (currentClass) { currentClass.lastMaxSeat = studentCount; currentClass.lastMissingSeats = missingInput; }
+                    appData.homeworks.push({ id: generateId(), classId: currentClassId, name, studentCount: students.length, typeId, createdAt: new Date(), students: students });
+                    await saveData(); showToast("成功新增點收項目！", "success"); renderHomeworkList();
+                }
+            }
+        });
+
+        bindClick('batch-status-btn', async () => {
+            if (!currentHomeworkId) return;
+            const targetStatus = document.getElementById('batch-status-select').value, statusText = document.querySelector('#batch-status-select option:checked').textContent, hw = appData.homeworks.find(h => h.id === currentHomeworkId);
+            if (!hw) return;
+            showConfirmModal('全班一鍵套用變更', `確定要將目前這份作業的所有座號均套用變更為「${statusText}」嗎？`, async () => {
+                (hw.students || []).forEach(s => s.status = targetStatus); renderStudentGrid(currentHomeworkId); await saveData(); showToast("已套用全班狀態變更！", "success");
+            });
+        });
+
+        bindClick('add-new-type-btn', async () => {
+            appData.homeworkTypes.push({
+                id: `custom-${Date.now()}`, name: '新作業種類',
+                statuses: [ { key: 's1', text: '未繳交', color: 'bg-slate-200', textColor: 'text-slate-500', isCompleted: false }, { key: 's2', text: '已完成', color: 'bg-emerald-500', textColor: 'text-white', isCompleted: true } ]
+            });
+            await saveData(); showToast("已新增自訂作業種類！"); renderHomeworkTypesPage();
+        });
+
+        const typesList = document.getElementById('types-list');
+        if(typesList) {
+            typesList.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('delete-type-btn')) {
+                    const idx = parseInt(e.target.dataset.typeIndex); if (appData.homeworkTypes[idx].id === 'default') return; 
+                    showConfirmModal('刪除作業種類', `確定要將自訂種類「${appData.homeworkTypes[idx].name}」刪除嗎？`, async () => {
+                        appData.homeworkTypes.splice(idx, 1); await saveData(); renderHomeworkTypesPage(); showToast("已刪除該自訂作業種類。", "info");
+                    });
+                    return;
+                }
+                if (e.target.classList.contains('add-status-btn')) {
+                    const idx = parseInt(e.target.dataset.typeIndex); 
+                    if (appData.homeworkTypes[idx].statuses.length >= 4) { showToast("每個種類最多支援 4 個核心狀態", "error"); return; }
+                    appData.homeworkTypes[idx].statuses.push({ key: `s${Date.now()}`, text: '新狀態', color: 'bg-slate-200', textColor: 'text-slate-500', isCompleted: false });
+                    await saveData(); renderHomeworkTypesPage(); showToast("已新增一個狀態！"); return;
+                }
+                if (e.target.classList.contains('delete-status-btn')) {
+                    const typeIdx = parseInt(e.target.dataset.typeIndex), statusIdx = parseInt(e.target.dataset.statusIndex);
+                    if (appData.homeworkTypes[typeIdx].statuses.length <= 2) { showToast("每個種類最少需要 2 個狀態以利切換", "error"); return; }
+                    appData.homeworkTypes[typeIdx].statuses.splice(statusIdx, 1); await saveData(); renderHomeworkTypesPage(); showToast("已移除狀態。"); return;
+                }
+                if (e.target.classList.contains('color-dot')) {
+                    const typeIdx = parseInt(e.target.dataset.typeIndex), statusIdx = parseInt(e.target.dataset.statusIndex);
+                    const currentClass = appData.homeworkTypes[typeIdx].statuses[statusIdx].color;
+                    let colorIndex = STATUS_COLORS.findIndex(c => c.class === currentClass); if(colorIndex === -1) colorIndex = 0;
+                    const nextColor = STATUS_COLORS[(colorIndex + 1) % STATUS_COLORS.length];
+                    appData.homeworkTypes[typeIdx].statuses[statusIdx].color = nextColor.class; appData.homeworkTypes[typeIdx].statuses[statusIdx].textColor = nextColor.textClass;
+                    await saveData(); renderHomeworkTypesPage(); return;
+                }
+            });
+
+            typesList.addEventListener('change', async (e) => {
+                if (e.target.classList.contains('type-name-input')) { appData.homeworkTypes[parseInt(e.target.dataset.typeIndex)].name = e.target.value.trim(); await saveData(); }
+                if (e.target.classList.contains('status-name-input')) { appData.homeworkTypes[parseInt(e.target.dataset.typeIndex)].statuses[parseInt(e.target.dataset.statusIndex)].text = e.target.value.trim(); await saveData(); }
+                if (e.target.classList.contains('is-completed-check')) { appData.homeworkTypes[parseInt(e.target.dataset.typeIndex)].statuses[parseInt(e.target.dataset.statusIndex)].isCompleted = e.target.checked; await saveData(); }
+            });
+        }
+
+        bindChange('sort-homework', renderHomeworkList);
+        bindChange('sort-student-detail', renderStudentDetailsPage);
+
+        bindSubmit('add-class-form', async (e) => {
+            e.preventDefault(); const className = document.getElementById('class-name').value.trim();
+            if(className) {
+                appData.classes.push({ id: generateId(), name: className, contactBook: {}, studentBarcodes: {} }); 
+                await saveData(); document.getElementById('class-name').value = ''; renderClassSelector(); renderClassList();
+                if(!currentClassId) { currentClassId = appData.classes[0].id; localStorage.setItem('currentClassId', currentClassId); renderHomeworkList(); }
+                closeModal(document.getElementById('manage-classes-modal')); showToast(`已成功新增班級「${className}」！`, "success");
+            }
+        });
+
+        const hwListEl = document.getElementById('homework-list');
+        if(hwListEl) hwListEl.addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('.delete-hw-btn'), editBtn = e.target.closest('.edit-hw-btn');
+            if (deleteBtn) {
+                e.stopPropagation(); const homeworkId = deleteBtn.dataset.id; const hw = appData.homeworks.find(h => h.id === homeworkId);
+                showConfirmModal('擦除作業點收項目', `確定要將「${hw.name}」完全從系統移出嗎？此操作無法恢復。`, async () => { appData.homeworks = appData.homeworks.filter(h => h.id !== homeworkId); await saveData(); showToast("作業已被刪除。", "info"); renderHomeworkList(); }); return;
+            }
+            if (editBtn) {
+                e.stopPropagation(); const homeworkId = editBtn.dataset.id; const hw = appData.homeworks.find(h => h.id === homeworkId);
+                const modal = document.getElementById('add-homework-modal'); document.getElementById('homework-modal-title').textContent = '更改作業名稱'; modal.querySelector('form').reset();
+                document.getElementById('homework-name').value = hw ? hw.name : ''; document.getElementById('edit-homework-id').value = homeworkId; document.getElementById('student-count-container').style.display = 'none'; document.getElementById('homework-type-container').style.display = 'none'; document.getElementById('missing-seats-hint').style.display = 'none'; openModal(modal); return;
+            }
+            const hwItem = e.target.closest('[data-id]');
+            if (hwItem) { document.getElementById('detail-page').dataset.from = 'main-page'; showDetailPage(hwItem.dataset.id); }
+        });
+        
+        const classListEl = document.getElementById('class-list');
+        if(classListEl) classListEl.addEventListener('click', (e) => {
+             if (e.target.closest('.delete-class-btn')) {
+                e.stopPropagation(); const btn = e.target.closest('.delete-class-btn'); const classId = btn.dataset.id; const className = btn.dataset.name;
+                showConfirmModal('移除班級', `警告：確定要將「${className}」連同該班所有作業點收記錄一併移除嗎？這將會同步擦除所有歷史登錄！`, async () => {
+                    appData.classes = appData.classes.filter(c => c.id !== classId); appData.homeworks = appData.homeworks.filter(h => h.classId !== classId);
+                    if(currentClassId === classId) { currentClassId = appData.classes.length > 0 ? appData.classes[0].id : null; if(currentClassId) localStorage.setItem('currentClassId', currentClassId); else localStorage.removeItem('currentClassId'); }
+                    await saveData(); renderClassSelector(); renderClassList(); renderHomeworkList(); showToast("已成功移除該班級。", "info");
+                });
+             }
+        });
+
+        const studentDetailsList = document.getElementById('student-details-list');
+        if(studentDetailsList) studentDetailsList.addEventListener('click', (e) => {
+            if(e.target.classList.contains('homework-link')) { document.getElementById('detail-page').dataset.from = 'student-details-page'; showDetailPage(e.target.dataset.id); }
+        });
+
+        bindChange('class-selector', (e) => { currentClassId = e.target.value; localStorage.setItem('currentClassId', currentClassId); renderHomeworkList(); });
+
+        bindClick('font-increase-btn', () => { blackboardFontSize += 0.1; document.getElementById('blackboard-content').style.fontSize = `${blackboardFontSize}rem`; localStorage.setItem('hw_pref_fontSize', blackboardFontSize); });
+        bindClick('font-decrease-btn', () => { if(blackboardFontSize > 0.5) { blackboardFontSize -= 0.1; document.getElementById('blackboard-content').style.fontSize = `${blackboardFontSize}rem`; localStorage.setItem('hw_pref_fontSize', blackboardFontSize); } });
+        bindClick('lineheight-increase-btn', () => { blackboardLineHeight += 0.2; document.getElementById('blackboard-content').style.lineHeight = `${blackboardLineHeight}`; localStorage.setItem('hw_pref_lineHeight', blackboardLineHeight); });
+        bindClick('lineheight-decrease-btn', () => { if(blackboardLineHeight > 1.0) { blackboardLineHeight -= 0.2; document.getElementById('blackboard-content').style.lineHeight = `${blackboardLineHeight}`; localStorage.setItem('hw_pref_lineHeight', blackboardLineHeight); } });
+
+        bindSubmit('add-contact-item-form', async (e) => {
+            e.preventDefault(); const input = document.getElementById('contact-book-input'), newItem = input.value.trim(), dateString = formatDate(selectedDate, 'YYYY-MM-DD');
+            if (newItem && currentClassId) {
+                const currentClass = appData.classes.find(c => c.id === currentClassId); if (!currentClass) return;
+                if(!currentClass.contactBook) currentClass.contactBook = {}; if(!currentClass.contactBook[dateString]) currentClass.contactBook[dateString] = [];
+                currentClass.contactBook[dateString].push(newItem); await saveData(); renderContactBookItems(); input.value = ''; showToast("已寫上黑板！", "success");
+            }
+        });
+
+        const blackboardEl = document.getElementById('blackboard-content');
+        if(blackboardEl) blackboardEl.addEventListener('click', async (e) => {
+            if (!currentClassId) return;
+            const currentClass = appData.classes.find(c => c.id === currentClassId), dateString = formatDate(selectedDate, 'YYYY-MM-DD');
+            const deleteBtn = e.target.closest('.delete-contact-item-btn');
+            if (deleteBtn) { 
+                currentClass.contactBook[dateString] = currentClass.contactBook[dateString].filter((_, index) => index !== parseInt(deleteBtn.dataset.index)); 
+                await saveData(); renderContactBookItems(); showToast("已從黑板擦除！", "info"); return; 
+            }
+            const editBtn = e.target.closest('.edit-contact-btn');
+            if (editBtn) {
+                const index = parseInt(editBtn.dataset.index), newText = prompt('請修改聯絡簿事項：', currentClass.contactBook[dateString][index]);
+                if (newText && newText.trim() !== '') { currentClass.contactBook[dateString][index] = newText.trim(); await saveData(); renderContactBookItems(); showToast("修改黑板內容成功！"); } return;
+            }
+            const toHwBtn = e.target.closest('.to-hw-btn');
+            if (toHwBtn) {
+                const index = parseInt(toHwBtn.dataset.index), modal = document.getElementById('add-homework-modal');
+                document.getElementById('homework-modal-title').textContent = '新增聯絡簿作業'; modal.querySelector('form').reset(); document.getElementById('homework-name').value = currentClass.contactBook[dateString][index]; document.getElementById('edit-homework-id').value = '';
+                document.getElementById('student-count-container').style.display = 'grid'; document.getElementById('homework-type-container').style.display = 'block'; document.getElementById('missing-seats-hint').style.display = 'block'; updateTypeSelects(); 
+                if (currentClass && currentClass.lastMaxSeat) { document.getElementById('student-count').value = currentClass.lastMaxSeat; document.getElementById('homework-missing-seats').value = currentClass.lastMissingSeats || ''; } 
+                else { const classHws = appData.homeworks.filter(h => h.classId === currentClassId); if(classHws.length > 0) { let maxSeat = 0; (classHws[classHws.length-1].students || []).forEach(s => maxSeat = Math.max(maxSeat, s.seat)); document.getElementById('student-count').value = maxSeat || 30; } else document.getElementById('student-count').value = 30; }
+                openModal(modal);
+            }
+        });
+
+        bindClick('clear-contact-book-btn', () => {
+            if (!currentClassId) return;
+            showConfirmModal('清空本日聯絡簿', `您確定要清空 ${formatDate(selectedDate)} 的所有聯絡簿事項嗎？`, async () => { appData.classes.find(c => c.id === currentClassId).contactBook[formatDate(selectedDate, 'YYYY-MM-DD')] = []; await saveData(); renderContactBookItems(); showToast("本日聯絡簿已全部清空。", "info"); });
+        });
+
+        bindClick('clear-all-contact-book-btn', () => {
+            if (!currentClassId) return;
+            showConfirmModal('刪除全部聯絡簿', `警告：您確定要刪除當前班級「所有日期」的聯絡簿內容嗎？此操作將會完全清空，且無法復原。`, async () => { appData.classes.find(c => c.id === currentClassId).contactBook = {}; await saveData(); renderContactBookItems(); showToast("全部聯絡簿記錄已清空。", "info"); });
+        });
+
+        bindClick('apply-yesterday-btn', async () => {
+            if (!currentClassId) return;
+            const yesterday = new Date(selectedDate); yesterday.setDate(selectedDate.getDate() - 1);
+            const yStr = formatDate(yesterday, 'YYYY-MM-DD'), tStr = formatDate(selectedDate, 'YYYY-MM-DD'), currentClass = appData.classes.find(c => c.id === currentClassId), yesterdayItems = currentClass?.contactBook?.[yStr];
+            if (!yesterdayItems || yesterdayItems.length === 0) { showToast('昨日沒有聯絡簿內容可供套用。', 'error'); return; }
+            showConfirmModal('套用昨日內容', '確定要用昨日的內容覆蓋今天的聯絡簿嗎？這將覆蓋本日現有內容！', async () => { if(!currentClass.contactBook) currentClass.contactBook = {}; currentClass.contactBook[tStr] = [...yesterdayItems]; await saveData(); renderContactBookItems(); showToast("已成功載入昨日內文！", "success"); });
+        });
+        
+        bindClick('open-date-picker-btn', () => { calendarDate = new Date(selectedDate); renderCalendar(); openModal(document.getElementById('date-picker-modal')); });
+        bindClick('close-date-picker-btn', () => closeModal(document.getElementById('date-picker-modal')));
+        bindClick('prev-month-btn', () => { calendarDate.setMonth(calendarDate.getMonth() - 1); renderCalendar(); });
+        bindClick('next-month-btn', () => { calendarDate.setMonth(calendarDate.getMonth() + 1); renderCalendar(); });
+        
+        const calGrid = document.getElementById('calendar-grid');
+        if(calGrid) calGrid.addEventListener('click', (e) => {
+            const dayBtn = e.target.closest('.calendar-day');
+            if (dayBtn) { selectedDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth(), parseInt(dayBtn.dataset.day)); renderContactBookItems(); closeModal(document.getElementById('date-picker-modal')); }
+        });
+
+        bindClick('welcome-skip-btn', () => { localStorage.setItem('hasSeenWelcome_final', 'true'); closeModal(document.getElementById('welcome-modal')); showMainPage(); if(appData.classes.length === 0) openModal(document.getElementById('manage-classes-modal')); });
+
+        bindClick('welcome-link-btn', async () => {
+            if (!window.showSaveFilePicker) { showAlertModal("瀏覽器限制", "很抱歉，您的瀏覽器不支援自動儲存本地檔案功能。系統將為您切換至「瀏覽器暫存模式」。"); localStorage.setItem('hasSeenWelcome_final', 'true'); closeModal(document.getElementById('welcome-modal')); showMainPage(); if(appData.classes.length === 0) openModal(document.getElementById('manage-classes-modal')); return; }
+            try {
+                const handle = await window.showSaveFilePicker({ suggestedName: '作業點收資料.json', types: [{ description: 'JSON 檔案', accept: { 'application/json': ['.json'] } }] });
+                fileHandle = handle; await saveFileHandle(handle); await syncFromFileHandle(); await saveData(); localStorage.setItem('hasSeenWelcome_final', 'true'); closeModal(document.getElementById('welcome-modal'));
+                setTimeout(() => { showToast("✅ 成功建立並綁定實體檔案！系統將自動即時同步變更。", "success"); }, 300);
+                showMainPage(); if(appData.classes.length === 0) openModal(document.getElementById('manage-classes-modal'));
+            } catch(e) { if (e.name !== 'AbortError') showAlertModal("無法建立檔案連結", "錯誤細節：" + e.message); }
+        });
+
+        bindClick('resume-sync-btn', async () => {
+            if (!fileHandle) return;
+            try {
+                if ((await fileHandle.requestPermission({ mode: 'readwrite' })) === 'granted') { document.getElementById('sync-banner').classList.add('hidden'); document.body.classList.remove('has-banner'); await syncFromFileHandle(); reRenderCurrentPage(); showToast("硬碟檔案連線已重新恢復！", "success"); }
+            } catch(e) { console.error(e); }
+        });
+
+        document.querySelectorAll('.cancel-btn, #close-warning-btn').forEach(btn => btn.addEventListener('click', (e) => closeModal(e.target.closest('.modal'))));
+    }
+
+    window.addEventListener('resize', () => { if (currentPage === 'detail-page' && currentHomeworkId) renderStudentGrid(currentHomeworkId); });
+
+    async function init() {
+        const localData = localStorage.getItem('homeworkAppData');
+        if (localData) { appData = JSON.parse(localData); fixDates(appData); }
+        
+        setupButtonEvents(); 
+        document.getElementById('loading-page').classList.add('hidden');
+
+        if (!localStorage.getItem('hasSeenWelcome_final')) { openModal(document.getElementById('welcome-modal')); return; }
+        if (window.showSaveFilePicker) {
+            try {
+                fileHandle = await getFileHandle();
+                if (fileHandle && (await fileHandle.queryPermission({ mode: 'readwrite' })) !== 'granted') { document.getElementById('sync-banner').classList.remove('hidden'); document.body.classList.add('has-banner'); }
+                else if (fileHandle) await syncFromFileHandle();
+            } catch (e) { console.log("不支援 File System Access"); }
+        }
+        pushPageState({ page: 'main' }, '#main'); showMainPage(true);
+        if(appData.classes.length === 0) openModal(document.getElementById('manage-classes-modal'));
+    }
+    
+    // 啟動系統
+    init();
 </script>
 </body>
 </html>
